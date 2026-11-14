@@ -331,6 +331,8 @@ ASALocalRun/
 
 !ApexPad/libs/x64/
 !ApexPad/libs/x86/
+!libs/x64/
+!libs/x86/
 
 
 # Distribution and setup packages
