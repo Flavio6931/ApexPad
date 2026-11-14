@@ -3828,7 +3828,7 @@ namespace DS4Windows
             { new Dictionary<string, int>(), new Dictionary<string, int>(), new Dictionary<string, int>(),
               new Dictionary<string, int>(), new Dictionary<string, int>(), new Dictionary<string, int>(), new Dictionary<string, int>(), new Dictionary<string, int>(), new Dictionary<string, int>() };
 
-        public string useLang = "";
+        public string useLang = "es";
         public bool downloadLang = true;
         public TrayIconChoice useIconChoice;
         public const bool DEFAULT_FLASH_WHEN_LATE = true;

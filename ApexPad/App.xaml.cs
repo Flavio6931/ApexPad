@@ -139,6 +139,9 @@ namespace DS4WinWPF
             // Allow sleep time durations less than 16 ms
             DS4Windows.Util.timeBeginPeriod(1);
 
+            // Forzar interfaz en espanol desde el arranque (incluye dialogos iniciales)
+            SetUICulture("es");
+
             // Retrieve info about installed ViGEmBus device if found
             DS4Windows.Global.RefreshViGEmBusInfo();
 
@@ -229,8 +232,9 @@ namespace DS4WinWPF
                 DS4Windows.Global.CreateStdActions();
             }
 
-            // Have app use selected culture
-            SetUICulture(DS4Windows.Global.UseLang);
+            // Forzar interfaz siempre en espanol aunque Profiles.xml tenga otro idioma o este vacio
+            DS4Windows.Global.UseLang = "es";
+            SetUICulture("es");
             DS4Windows.AppThemeChoice themeChoice = DS4Windows.Global.UseCurrentTheme;
             ChangeTheme(DS4Windows.Global.UseCurrentTheme, false);
 
@@ -389,11 +393,13 @@ namespace DS4WinWPF
 
                 // Load DS4Windows config if it exists
                 DS4Windows.Global.FindConfigLocation();
+                SetUICulture("es");
                 bool readAppConfig = DS4Windows.Global.Load();
                 if (readAppConfig)
                 {
-                    // Have app use selected culture
-                    SetUICulture(DS4Windows.Global.UseLang);
+                    // Forzar interfaz siempre en espanol
+                    DS4Windows.Global.UseLang = "es";
+                    SetUICulture("es");
                     DS4Windows.AppThemeChoice themeChoice = DS4Windows.Global.UseCurrentTheme;
                     ChangeTheme(DS4Windows.Global.UseCurrentTheme, false);
                 }
@@ -694,15 +700,18 @@ namespace DS4WinWPF
         {
             try
             {
-                //CultureInfo ci = new CultureInfo("ja");
+                if (string.IsNullOrWhiteSpace(culture))
+                {
+                    culture = "es";
+                }
+
                 CultureInfo ci = CultureInfo.GetCultureInfo(culture);
-                LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+                // Evitar cambiar CurrentCulture (numeros/fechas XML usan formato invariante con punto)
+                LocalizeDictionary.Instance.SetCurrentThreadCulture = false;
                 LocalizeDictionary.Instance.Culture = ci;
-                // fixes the culture in threads
-                CultureInfo.DefaultThreadCurrentCulture = ci;
+                // Fijar cultura de recursos UI en todos los hilos sin alterar formato numerico
                 CultureInfo.DefaultThreadCurrentUICulture = ci;
-                //DS4WinWPF.Properties.Resources.Culture = ci;
-                Thread.CurrentThread.CurrentCulture = ci;
+                DS4WinWPF.Properties.Resources.Culture = ci;
                 Thread.CurrentThread.CurrentUICulture = ci;
             }
             catch (CultureNotFoundException) { /* Skip setting culture that we cannot set */ }

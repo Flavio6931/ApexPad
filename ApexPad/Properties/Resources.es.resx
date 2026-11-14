@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActionExists" xml:space="preserve">
+    <value>Ya existe una acción con ese nombre</value>
+  </data>
+  <data name="AddingToList" xml:space="preserve">
+    <value>Añadiendo a la lista...</value>
+  </data>
+  <data name="AddPrograms" xml:space="preserve">
+    <value>Añadir programas</value>
+  </data>
+  <data name="ALocactionNeeded" xml:space="preserve">
+    <value>Debes elegir una ubicación para continuar</value>
+  </data>
+  <data name="AlwaysRainbow" xml:space="preserve">
+    <value>Modo arcoíris permanente</value>
+  </data>
+  <data name="AssignProfile" xml:space="preserve">
+    <value>Asignar al mando *number*</value>
+  </data>
+  <data name="Battery" xml:space="preserve">
+    <value>Batería: *number*%</value>
+  </data>
+  <data name="BestUsedRightSide" xml:space="preserve">
+    <value>Funciona mejor con el lado derecho como función de ratón</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Examinar...</value>
+  </data>
+  <data name="BTPollRate" xml:space="preserve">
+    <value>Determina la tasa de sondeo del mando DS4 cuando está conectado por Bluetooth. (Se aplica al guardar el perfil)</value>
+  </data>
+  <data name="CannotMoveFiles" xml:space="preserve">
+    <value>No se pueden mover los archivos a la nueva ubicación. Renombra la carpeta DS4Tool a "ApexPad"</value>
+  </data>
+  <data name="CannotWriteHere" xml:space="preserve">
+    <value>No se puede escribir en la ubicación actual. ¿Copiar ajustes a AppData?</value>
+  </data>
+  <data name="ChargeController" xml:space="preserve">
+    <value>Cargar la batería</value>
+  </data>
+  <data name="Charged" xml:space="preserve">
+    <value>Cargado</value>
+  </data>
+  <data name="Charging" xml:space="preserve">
+    <value>Cargando: *number*%</value>
+  </data>
+  <data name="CheckBattery" xml:space="preserve">
+    <value>Comprobar batería</value>
+  </data>
+  <data name="CloseConfirm" xml:space="preserve">
+    <value>Esto desconectará todos tus mandos conectados. ¿Continuar?</value>
+  </data>
+  <data name="CloseDS4W" xml:space="preserve">
+    <value>¿Cerrar ApexPad?</value>
+  </data>
+  <data name="CloseMinimize" xml:space="preserve">
+    <value>Al cerrar la ventana principal se minimiza la app. Para cerrarla por completo usa el icono de notificaciones</value>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="ColorByBattery" xml:space="preserve">
+    <value>Color según % de batería</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirmar...</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Conectando...</value>
+  </data>
+  <data name="ContextEdit" xml:space="preserve">
+    <value>Editar perfil del mando *number*</value>
+  </data>
+  <data name="ContextNew" xml:space="preserve">
+    <value>Crear perfil para el mando *number*</value>
+  </data>
+  <data name="ControllerWasRemoved" xml:space="preserve">
+    <value>Se desconectó o perdió conexión el mando *Mac address*</value>
+  </data>
+  <data name="CopyComplete" xml:space="preserve">
+    <value>Copia completada. Reinicia ApexPad y elimina los ajustes de la carpeta del programa</value>
+  </data>
+  <data name="CopyFullColor" xml:space="preserve">
+    <value>Haz clic para copiar el color completo</value>
+  </data>
+  <data name="CouldNotOpenDS4" xml:space="preserve">
+    <value>Advertencia: No se pudo abrir el DS4 *Mac address* en modo exclusivo.</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>día</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>días</value>
+  </data>
+  <data name="DeleteProfile" xml:space="preserve">
+    <value>¿Eliminar perfil?</value>
+  </data>
+  <data name="DimByBattery" xml:space="preserve">
+    <value>Atenuar según % de batería</value>
+  </data>
+  <data name="DisconnectBT" xml:space="preserve">
+    <value>Desconectar BT</value>
+  </data>
+  <data name="Disconnected" xml:space="preserve">
+    <value>Desconectado</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Descargando *number*%</value>
+  </data>
+  <data name="DownloadVersion" xml:space="preserve">
+    <value>¿Descargar la versión *number* ahora?</value>
+  </data>
+  <data name="DownText" xml:space="preserve">
+    <value>Abajo</value>
+  </data>
+  <data name="DS4Update" xml:space="preserve">
+    <value>¡Actualización de ApexPad disponible!</value>
+  </data>
+  <data name="DS4WindowsCannotEditHere" xml:space="preserve">
+    <value>ApexPad no puede editar ajustes aquí; la aplicación se cerrará ahora</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="FallBack" xml:space="preserve">
+    <value>Respaldo</value>
+  </data>
+  <data name="FallBackTo" xml:space="preserve">
+    <value>Volver a *button*</value>
+  </data>
+  <data name="FifthMouseDown" xml:space="preserve">
+    <value>5.º botón del ratón pulsado</value>
+  </data>
+  <data name="FifthMouseUp" xml:space="preserve">
+    <value>5.º botón del ratón soltado</value>
+  </data>
+  <data name="FlashAtTip" xml:space="preserve">
+    <value>Haz clic para cambiar el color del parpadeo. Negro = color predeterminado</value>
+  </data>
+  <data name="FlushHID" xml:space="preserve">
+    <value>Vaciar cola HID</value>
+  </data>
+  <data name="FlushHIDTip" xml:space="preserve">
+    <value>Vaciar la cola HID después de cada lectura</value>
+  </data>
+  <data name="FoundController" xml:space="preserve">
+    <value>Mando encontrado:</value>
+  </data>
+  <data name="FourthMouseDown" xml:space="preserve">
+    <value>4.º botón del ratón pulsado</value>
+  </data>
+  <data name="FourthMouseUp" xml:space="preserve">
+    <value>4.º botón del ratón soltado</value>
+  </data>
+  <data name="Full" xml:space="preserve">
+    <value>Completo</value>
+  </data>
+  <data name="GyroReadout" xml:space="preserve">
+    <value>Haz clic para ver la lectura del giroscopio SixAxis</value>
+  </data>
+  <data name="GyroTriggerBehavior" xml:space="preserve">
+    <value>Marca para activar el giroscopio mientras el disparador esté activo. Desmarca para desactivarlo.</value>
+  </data>
+  <data name="GyroX" xml:space="preserve">
+    <value>Giroscopio X, inclinación izquierda y derecha</value>
+  </data>
+  <data name="GyroY" xml:space="preserve">
+    <value>Giroscopio Y, inclinación adelante y atrás</value>
+  </data>
+  <data name="GyroZ" xml:space="preserve">
+    <value>Giroscopio Z, inclinación arriba y abajo</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>hora</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>horas</value>
+  </data>
+  <data name="HoverOverItems" xml:space="preserve">
+    <value>Pasa el cursor sobre los elementos para ver su descripción o más detalles</value>
+  </data>
+  <data name="IfRemovingDS4Windows" xml:space="preserve">
+    <value>Si desinstalas ApexPad, puedes eliminar los ajustes siguiendo el enlace a la carpeta de perfiles</value>
+  </data>
+  <data name="InputDelay" xml:space="preserve">
+    <value>Retardo de entrada: {0:0.##} ms</value>
+  </data>
+  <data name="InstallComplete" xml:space="preserve">
+    <value>Instalación completada</value>
+  </data>
+  <data name="InstallDriver" xml:space="preserve">
+    <value>Instala los controladores aquí</value>
+  </data>
+  <data name="InstallFailed" xml:space="preserve">
+    <value>Error en la instalación, inténtalo de nuevo</value>
+  </data>
+  <data name="Installing" xml:space="preserve">
+    <value>Instalando...</value>
+  </data>
+  <data name="Jitter" xml:space="preserve">
+    <value>Usar SixAxis para ayudar a calcular el movimiento del panel táctil</value>
+  </data>
+  <data name="KeepThisSize" xml:space="preserve">
+    <value>Mantener este tamaño de ventana al cerrar</value>
+  </data>
+  <data name="LanguagePackApplyRestartRequired" xml:space="preserve">
+    <value>El cambio de paquete de idioma surtirá efecto tras reiniciar ApexPad.</value>
+  </data>
+  <data name="LatencyNotOverTen" xml:space="preserve">
+    <value>La latencia del mando *number* ahora es inferior a 10 ms</value>
+  </data>
+  <data name="LatencyOverTen" xml:space="preserve">
+    <value>La latencia del mando {0} supera los 10 ms ({1} ms)</value>
+  </data>
+  <data name="LaunchProgram" xml:space="preserve">
+    <value>Iniciar *program*</value>
+  </data>
+  <data name="LightByBatteryTip" xml:space="preserve">
+    <value>Atenuar también la luz por tiempo de inactividad si está activado y el DS4 está cargado</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Cargando...</value>
+  </data>
+  <data name="LoadProfile" xml:space="preserve">
+    <value>Cargar *profile*</value>
+  </data>
+  <data name="Macro" xml:space="preserve">
+    <value>Macro</value>
+  </data>
+  <data name="MacroRecorded" xml:space="preserve">
+    <value>Macro grabada</value>
+  </data>
+  <data name="MakeNewProfile" xml:space="preserve">
+    <value>Crear un nuevo perfil</value>
+  </data>
+  <data name="MultiAction" xml:space="preserve">
+    <value>Botón multiacción</value>
+  </data>
+  <data name="NA" xml:space="preserve">
+    <value>N/D</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>Nuevo</value>
+  </data>
+  <data name="NoMacroRecorded" xml:space="preserve">
+    <value>No se grabó ninguna macro</value>
+  </data>
+  <data name="noneProfile" xml:space="preserve">
+    <value>(ninguno)</value>
+  </data>
+  <data name="NoneText" xml:space="preserve">
+    <value>ninguno</value>
+  </data>
+  <data name="NoProfileLoaded" xml:space="preserve">
+    <value>Sin perfil cargado</value>
+  </data>
+  <data name="NotUsingProfile" xml:space="preserve">
+    <value>El mando {0} no está usando un perfil. Batería al {1}%</value>
+  </data>
+  <data name="NotValid" xml:space="preserve">
+    <value>No válido</value>
+  </data>
+  <data name="OpeningInstaller" xml:space="preserve">
+    <value>Abriendo instalador</value>
+  </data>
+  <data name="OpenScpDriver" xml:space="preserve">
+    <value>Abre ScpDriver.exe</value>
+  </data>
+  <data name="OtherFileLocation" xml:space="preserve">
+    <value>, se eliminarán los archivos de la otra ubicación</value>
+  </data>
+  <data name="PleaseDownloadUpdater" xml:space="preserve">
+    <value>Descarga el actualizador ahora, colócalo en la carpeta del programa y renómbralo a DS4Updater.exe si usas x86, luego vuelve a comprobar actualizaciones. ApexPad intentará abrir la página de versiones al cerrar esta ventana.</value>
+  </data>
+  <data name="PleaseImport" xml:space="preserve">
+    <value>Importa o crea un perfil</value>
+  </data>
+  <data name="PlusNewProfile" xml:space="preserve">
+    <value>Nuevo perfil</value>
+  </data>
+  <data name="ProfileCannotRestore" xml:space="preserve">
+    <value>No se pudo restaurar *Profile name*.</value>
+  </data>
+  <data name="ProfileFolderMoved" xml:space="preserve">
+    <value>Carpeta de perfiles movida a la carpeta del programa</value>
+  </data>
+  <data name="Programs" xml:space="preserve">
+    <value>Programas</value>
+  </data>
+  <data name="QuickCharge" xml:space="preserve">
+    <value>Desactivar BT automáticamente al conectar por USB</value>
+  </data>
+  <data name="QuitOtherPrograms" xml:space="preserve">
+    <value>Debes cerrar otras aplicaciones como apps UWP (Netflix), Steam, Uplay, Edge o NVIDIA IN-GAME antes de activar 'Ocultar mando DS4'. Más información: https://github.com/Ryochan7/DS4Windows/wiki/Exclusive-Mode-(Hide-DS4-Controller-config-option)-tips-and-issues</value>
+  </data>
+  <data name="RecordText" xml:space="preserve">
+    <value>Grabar</value>
+  </data>
+  <data name="RightClickPresets" xml:space="preserve">
+    <value>Haz clic derecho para aplicar preajustes a un conjunto de controles</value>
+  </data>
+  <data name="RunAtStartup" xml:space="preserve">
+    <value>Indica a Windows que inicie ApexPad tras iniciar sesión</value>
+  </data>
+  <data name="SaveRecordedMacro" xml:space="preserve">
+    <value>¿Guardar la macro grabada?</value>
+  </data>
+  <data name="ScanCode" xml:space="preserve">
+    <value>Scan Code</value>
+  </data>
+  <data name="SearchingController" xml:space="preserve">
+    <value>Buscando mandos...</value>
+  </data>
+  <data name="SelectActionTitle" xml:space="preserve">
+    <value>Selecciona una acción para *action*</value>
+  </data>
+  <data name="SelectMacro" xml:space="preserve">
+    <value>Seleccionar una macro</value>
+  </data>
+  <data name="SetRegularTrigger" xml:space="preserve">
+    <value>Fijar disparador normal</value>
+  </data>
+  <data name="SetUnloadTrigger" xml:space="preserve">
+    <value>Fijar disparador de descarga</value>
+  </data>
+  <data name="Shortcuts" xml:space="preserve">
+    <value>Atajos</value>
+  </data>
+  <data name="SASteeringWheelEmulationCalibrate" xml:space="preserve">
+    <value>Calibración de emulación de volante SixAxis</value>
+  </data>
+  <data name="SASteeringWheelEmulationCalibrateInstruction1" xml:space="preserve">
+    <value>(1) Centra el mando, mantenlo firme y pulsa "X"</value>
+  </data>
+  <data name="SASteeringWheelEmulationCalibrateInstruction2" xml:space="preserve">
+    <value>(2) Gira 90° a la izquierda (o derecha) y pulsa "X"</value>
+  </data>
+  <data name="SASteeringWheelEmulationCalibrateInstruction3" xml:space="preserve">
+    <value>(3) Gira 90° a la derecha (o izquierda) y pulsa "X"</value>
+  </data>
+  <data name="SASteeringWheelEmulationCalibrateInstruction" xml:space="preserve">
+    <value>Todos los puntos de calibración quedarán fijados cuando la barra de luz se ponga verde. Mientras giras el mando, la luz parpadea en cada punto. Pulsa Aceptar para confirmar.</value>
+  </data>
+  <data name="SASteeringWheelEmulationCalibrateNoControllerError" xml:space="preserve">
+    <value>No se puede calibrar la emulación de volante por giroscopio sin un mando conectado. Conecta un mando por Bluetooth o USB.</value>
+  </data>
+  <data name="SASteeringWheelEmulationCalibrateNoneAxisError" xml:space="preserve">
+    <value>El eje de emulación de volante por giroscopio está configurado como NINGUNO. Selecciona un eje antes de calibrar.</value>
+  </data>
+  <data name="SixAxisReading" xml:space="preserve">
+    <value>Haz clic para ver lectura avanzada de SixAxis</value>
+  </data>
+  <data name="Starting" xml:space="preserve">
+    <value>Iniciando...</value>
+  </data>
+  <data name="StartText" xml:space="preserve">
+    <value>Iniciar</value>
+  </data>
+  <data name="Step1" xml:space="preserve">
+    <value>Paso 1: Instalar el controlador ViGEmBus</value>
+  </data>
+  <data name="StopHText" xml:space="preserve">
+    <value>Detener fuerte</value>
+  </data>
+  <data name="StopLText" xml:space="preserve">
+    <value>Detener suave</value>
+  </data>
+  <data name="StoppedDS4Windows" xml:space="preserve">
+    <value>ApexPad detenido</value>
+  </data>
+  <data name="StoppingDS4" xml:space="preserve">
+    <value>Deteniendo mandos de entrada DS4</value>
+  </data>
+  <data name="StoppingX360" xml:space="preserve">
+    <value>Deteniendo mandos virtuales de salida</value>
+  </data>
+  <data name="StopText" xml:space="preserve">
+    <value>Detener</value>
+  </data>
+  <data name="SwipeDown" xml:space="preserve">
+    <value>Deslizar abajo</value>
+  </data>
+  <data name="SwipeLeft" xml:space="preserve">
+    <value>Deslizar izquierda</value>
+  </data>
+  <data name="SwipeRight" xml:space="preserve">
+    <value>Deslizar derecha</value>
+  </data>
+  <data name="SwipeTouchpad" xml:space="preserve">
+    <value>Desliza el panel táctil para cambiar de perfil</value>
+  </data>
+  <data name="SwipeUp" xml:space="preserve">
+    <value>Deslizar arriba</value>
+  </data>
+  <data name="TapAndHold" xml:space="preserve">
+    <value>Toca y mantén para arrastrar, ligero retardo con toques simples</value>
+  </data>
+  <data name="TestHText" xml:space="preserve">
+    <value>Probar fuerte</value>
+  </data>
+  <data name="TestLText" xml:space="preserve">
+    <value>Probar suave</value>
+  </data>
+  <data name="TestText" xml:space="preserve">
+    <value>Probar</value>
+  </data>
+  <data name="TextDocs" xml:space="preserve">
+    <value>Documento de texto (*.txt)</value>
+  </data>
+  <data name="TiltDown" xml:space="preserve">
+    <value>Inclinar abajo</value>
+  </data>
+  <data name="TiltLeft" xml:space="preserve">
+    <value>Inclinar izquierda</value>
+  </data>
+  <data name="TiltRight" xml:space="preserve">
+    <value>Inclinar derecha</value>
+  </data>
+  <data name="TiltUp" xml:space="preserve">
+    <value>Inclinar arriba</value>
+  </data>
+  <data name="TouchpadMovementOff" xml:space="preserve">
+    <value>Movimiento del panel táctil desactivado</value>
+  </data>
+  <data name="TouchpadMovementOn" xml:space="preserve">
+    <value>Movimiento del panel táctil activado</value>
+  </data>
+  <data name="TouchpadOffTip" xml:space="preserve">
+    <value>Vuelve a activarlo pulsando PS+Panel táctil</value>
+  </data>
+  <data name="TwoFingerSwipe" xml:space="preserve">
+    <value>Deslizamiento con 2 dedos a izquierda o derecha</value>
+  </data>
+  <data name="TypeNewName" xml:space="preserve">
+    <value>escribe aquí el nuevo nombre</value>
+  </data>
+  <data name="TypeProfileName" xml:space="preserve">
+    <value>escribe aquí el nombre del perfil</value>
+  </data>
+  <data name="UACTask" xml:space="preserve">
+    <value>Debes ejecutar ApexPad como administrador para activar este modo.</value>
+  </data>
+  <data name="Unassigned" xml:space="preserve">
+    <value>Sin asignar</value>
+  </data>
+  <data name="UpText" xml:space="preserve">
+    <value>Arriba</value>
+  </data>
+  <data name="UpToDate" xml:space="preserve">
+    <value>ApexPad está actualizado.</value>
+  </data>
+  <data name="UseControllerForMapping" xml:space="preserve">
+    <value>También puedes usar tu mando para cambiar controles</value>
+  </data>
+  <data name="UsingExclusive" xml:space="preserve">
+    <value>Usando modo exclusivo</value>
+  </data>
+  <data name="UsingProfile" xml:space="preserve">
+    <value>El mando {0} está usando el perfil "{1}". Batería al {2}%</value>
+  </data>
+  <data name="UsingShared" xml:space="preserve">
+    <value>Usando modo compartido</value>
+  </data>
+  <data name="UsingTPSwipes" xml:space="preserve">
+    <value>Esto desactiva el panel táctil como ratón</value>
+  </data>
+  <data name="ValidName" xml:space="preserve">
+    <value>Introduce un nombre válido</value>
+  </data>
+  <data name="WaitMS" xml:space="preserve">
+    <value>Esperar *number* ms</value>
+  </data>
+  <data name="WillKeep" xml:space="preserve">
+    <value>Se mantendrá</value>
+  </data>
+  <data name="XMLFiles" xml:space="preserve">
+    <value>Archivos XML (*.xml)</value>
+  </data>
+  <data name="EnableTouchToggle" xml:space="preserve">
+    <value>Permitir alternar el ratón del panel táctil con PS + clic en panel táctil.</value>
+  </data>
+  <data name="UdpServer" xml:space="preserve">
+    <value>Activar servidor UDP. Dirección y puerto de escucha: 127.0.0.1 solo local | 0.0.0.0 todas las direcciones | Nombre de host o IP específica.</value>
+  </data>
+  <data name="AutoProfilePathAndWindowTitleEditTip" xml:space="preserve">
+    <value>^ABC = Coincidir al inicio (^) | ABC$ = Coincidir al final ($) | *ABC = Contiene (*)</value>
+  </data>
+  <data name="ShowAutoProfileDebugLogTip" xml:space="preserve">
+    <value>Si se activa, la pestaña Registro muestra detalles de los eventos de autoperfiles.</value>
+  </data>
+  <data name="MacroScanCodeTip" xml:space="preserve">
+    <value>Usar el código de escaneo (scan code) de las teclas en la macro</value>
+  </data>
+  <data name="MacroRunOnReleaseTip" xml:space="preserve">
+    <value>Ejecutar la macro al soltar el disparador</value>
+  </data>
+  <data name="MacroSynchronizedRunTip" xml:space="preserve">
+    <value>Ejecutar varias macros en orden sincronizado si un mismo disparador tiene varias (la macro de pulsación termina antes de ejecutar la de liberación)</value>
+  </data>
+  <data name="MacroRepeatTip" xml:space="preserve">
+    <value>Repetir la macro mientras el disparador se mantenga pulsado</value>
+  </data>
+  <data name="MacroKeepKeyStateTip" xml:space="preserve">
+    <value>Mantener el último estado de tecla al finalizar la macro (si una tecla queda pulsada, no se restablece automáticamente)</value>
+  </data>
+  <data name="SquareStickRoundness" xml:space="preserve">
+    <value>Redondez de las esquinas de Stick cuadrado</value>
+  </data>
+  <data name="XMLActionsCorrupt" xml:space="preserve">
+    <value>El archivo Actions.xml estaba dañado. Empezando desde cero.</value>
+  </data>
+  <data name="OscServer" xml:space="preserve">
+    <value>Activar servidor OSC. Escuchar puerto en todas las direcciones.</value>
+  </data>
+  <data name="UsingAutoTempProfile" xml:space="preserve">
+    <value>El mando {0} está usando el perfil temporal "{1}"</value>
+  </data>
+  <data name="DinputOnly" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="OutContNotice" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TouchStarted" xml:space="preserve">
+    <value>Toque iniciado</value>
+  </data>
+  <data name="TouchEnded" xml:space="preserve">
+    <value>Toque finalizado</value>
+  </data>
+</root>

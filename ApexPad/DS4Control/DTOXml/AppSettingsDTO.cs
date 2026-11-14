@@ -403,11 +403,11 @@ namespace DS4WinWPF.DS4Control.DTOXml
             }
         }
 
-        // Default UseLang to empty string. Not null
+        // Predeterminar idioma de la interfaz a espanol
         public string UseLang
         {
             get; set;
-        } = "";
+        } = "es";
 
         [XmlIgnore]
         public bool DownloadLang
