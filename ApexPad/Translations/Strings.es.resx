@@ -246,7 +246,7 @@
     <value>Carpeta de perfil</value>
   </data>
   <data name="QuickCharge" xml:space="preserve">
-    <value>Carga rápida</value>
+    <value>Apagar Bluetooth al conectar USB</value>
   </data>
   <data name="RecordText" xml:space="preserve">
     <value>Grabar</value>

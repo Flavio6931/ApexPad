@@ -42,6 +42,7 @@ using DS4Windows;
 using DS4WinWPF.DS4Control;
 using DS4WinWPF.Translations;
 using H.NotifyIcon.Core;
+using Ookii.Dialogs.Wpf;
 
 namespace DS4WinWPF.DS4Forms
 {
@@ -88,6 +89,11 @@ namespace DS4WinWPF.DS4Forms
             ProcessPriorityClass.High, ProcessPriorityClass.RealTime
         ];
 
+        public static List<string> ProcessPriorityLabels =
+        [
+            "Normal", "Por encima de lo normal", "Alta", "Tiempo real"
+        ];
+
         public MainWindow(ArgumentParser parser)
         {
             InitializeComponent();
@@ -102,7 +108,7 @@ namespace DS4WinWPF.DS4Forms
             //logListView.ItemsSource = logvm.LogItems;
             logListView.DataContext = logvm;
             lastMsgLb.DataContext = lastLogMsg;
-            ProcessPriorityComboBox.ItemsSource = ProcessPriorityClasses;
+            ProcessPriorityComboBox.ItemsSource = ProcessPriorityLabels;
 
             profileListHolder.Refresh();
             profilesListBox.ItemsSource = profileListHolder.ProfileListCol;
@@ -1863,7 +1869,13 @@ Suspend support not enabled.", true);
         {
             using var process = Process.GetCurrentProcess();
             var s = (ComboBox)sender;
-            var selectedPriority = (ProcessPriorityClass)s.SelectedItem;
+            int idx = s.SelectedIndex;
+            if (idx < 0 || idx >= ProcessPriorityClasses.Count)
+            {
+                return;
+            }
+
+            var selectedPriority = ProcessPriorityClasses[idx];
             if (!Global.IsAdministrator() && selectedPriority == ProcessPriorityClass.RealTime)
             {
                 MessageBox.Show(Strings.RealTimeNoAdmin);
@@ -1871,6 +1883,79 @@ Suspend support not enabled.", true);
                 settingsWrapVM.ProcessPriorityIndex = ProcessPriorityClasses.IndexOf(ProcessPriorityClass.High);
             }
             process.PriorityClass = selectedPriority;
+        }
+
+        /// <summary>
+        /// Abre un dialogo para seleccionar la carpeta personalizada de Steam.
+        /// </summary>
+        private void BrowseSteamBtn_Click(object sender, RoutedEventArgs e)
+        {
+            VistaFolderBrowserDialog dialog = new VistaFolderBrowserDialog();
+            if (!string.IsNullOrWhiteSpace(settingsWrapVM.CustomSteamFolder) &&
+                Directory.Exists(settingsWrapVM.CustomSteamFolder))
+            {
+                dialog.SelectedPath = settingsWrapVM.CustomSteamFolder;
+            }
+
+            if (dialog.ShowDialog(this) == true)
+            {
+                settingsWrapVM.CustomSteamFolder = dialog.SelectedPath;
+                customSteamTxt.Text = dialog.SelectedPath;
+            }
+        }
+
+        /// <summary>
+        /// Ejecuta un pulso breve de prueba de vibracion sobre el mando indicado.
+        /// </summary>
+        private async Task PulseControllerRumbleAsync(DS4Device d)
+        {
+            if (d == null)
+            {
+                MessageBox.Show(this, "No hay ningún mando activo conectado. Inicia el servicio y conecta un mando primero.",
+                    "ApexPad — Probar vibración", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            try
+            {
+                if (d is DS4Windows.InputDevices.DualSenseDevice dualsense)
+                {
+                    dualsense.UseRumble = true;
+                    dualsense.UseAccurateRumble = true;
+                }
+
+                d.setRumble(180, 220);
+                await Task.Delay(600);
+                d.setRumble(0, 0);
+            }
+            catch (Exception)
+            {
+                // Ignorar si el mando se desconecta durante el pulso de prueba
+            }
+        }
+
+        /// <summary>
+        /// Prueba la vibracion del mando correspondiente a la fila seleccionada en la pestaña Mandos.
+        /// </summary>
+        private async void TestContRumbleBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Control temp && temp.Tag != null)
+            {
+                int idx = Convert.ToInt32(temp.Tag);
+                if (idx >= 0 && idx < ControlService.CURRENT_DS4_CONTROLLER_LIMIT)
+                {
+                    await PulseControllerRumbleAsync(App.rootHub.DS4Controllers[idx]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Prueba la vibracion en el primer mando activo conectado desde Utilidades.
+        /// </summary>
+        private async void TestFirstContRumbleBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DS4Device activeDev = App.rootHub.DS4Controllers?.FirstOrDefault(d => d != null);
+            await PulseControllerRumbleAsync(activeDev);
         }
     }
 

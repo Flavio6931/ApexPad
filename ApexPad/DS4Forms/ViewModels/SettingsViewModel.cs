@@ -350,9 +350,11 @@ namespace DS4WinWPF.DS4Forms.ViewModels
                 if (Directory.Exists(value) || value == string.Empty)
                 {
                     DS4Windows.Global.CustomSteamFolder = value;
+                    CustomSteamFolderChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
+        public event EventHandler CustomSteamFolderChanged;
 
         private bool viewEnabled = true;
         public bool ViewEnabled
@@ -669,7 +671,7 @@ namespace DS4WinWPF.DS4Forms.ViewModels
             absMonitorChoices.Clear();
             absMonitorChoices.Add(new MonitorChoiceListing()
             {
-                DisplayName = "All Monitors",
+                DisplayName = "Todos los monitores",
                 EDID = string.Empty,
                 Index = 0,
             });

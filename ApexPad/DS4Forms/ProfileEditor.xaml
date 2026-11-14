@@ -25,11 +25,11 @@
             <Button x:Name="saveBtn" Content="{lex:Loc SaveProfile}" Margin="10,0,0,0" Click="SaveBtn_Click" />
             <Button x:Name="cancelBtn" Content="{lex:Loc Cancel}" Margin="10,0,0,0" Click="CancelBtn_Click" />
             <Button x:Name="applyBtn" Content="{lex:Loc Apply}" Margin="10,0,0,0" Click="ApplyBtn_Click" IsEnabled="False" />
-            <Button x:Name="presetBtn" Content="Select Preset" Margin="10,0,0,0" Click="PresetBtn_Click" />
+            <Button x:Name="presetBtn" Content="{lex:Loc Presets}" Margin="10,0,0,0" Click="PresetBtn_Click" />
             <Button x:Name="keepSizeBtn" Margin="10,0,0,0" Click="KeepSizeBtn_Click">
                 <StackPanel Orientation="Horizontal" Margin="0">
                     <Image x:Name="sizeImage" Source="{Binding Source={StaticResource resourcesPaths}, Path=SizePNG}" Width="20" Height="20"/>
-                    <TextBlock x:Name="sizeMsg" Text="Keep this window size after closing" Margin="4,0,0,0" VerticalAlignment="Center" />
+                    <TextBlock x:Name="sizeMsg" Text="{lex:Loc Resources:KeepThisSize}" Margin="4,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
 
             </Button>
@@ -2063,13 +2063,6 @@
                                   Margin="0,8,0,0" />-->
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="Debouncing" MinHeight="30" Margin="4,4,4,0" Padding="0,4,0,4">
-                            <StackPanel Orientation="Horizontal">
-                                <xctk:IntegerUpDown x:Name="Debouncing" Value="{Binding DebouncingMs}" Minimum="0" Maximum="1000"
-                                                    MinWidth="50" DockPanel.Dock="Left" />
-                                <Label Content="ms" />
-                            </StackPanel>
-                        </GroupBox>
                         <GroupBox Header="{lex:Loc Rumble}" MinHeight="50" Margin="4,4,4,0" Padding="0,4,0,4">
                             <StackPanel>
                             <UniformGrid Rows="1" Columns="3">
@@ -2125,12 +2118,19 @@
 
                             </StackPanel>
                         </GroupBox>
+                        <GroupBox Header="Debouncing" MinHeight="30" Margin="4,4,4,0" Padding="0,4,0,4">
+                            <StackPanel Orientation="Horizontal">
+                                <xctk:IntegerUpDown x:Name="Debouncing" Value="{Binding DebouncingMs}" Minimum="0" Maximum="1000"
+                                                    MinWidth="50" DockPanel.Dock="Left" />
+                                <Label Content="ms" />
+                            </StackPanel>
+                        </GroupBox>
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                             <Label Content="{lex:Loc UseController}" ToolTip="{lex:Loc Resources:UseControllerForMapping}" />
                             <xctk:IntegerUpDown x:Name="useControllerUD" d:IsHidden="True" Width="40" Margin="8,0,0,0"
                                             Value="0" Minimum="0" Maximum="4" IsEnabled="False"
                                             ToolTip="{lex:Loc Resources:UseControllerForMapping}" />
-                            <CheckBox x:Name="useControllerReadoutCk" FlowDirection="RightToLeft" Content="for readout" VerticalAlignment="Center"
+                            <CheckBox x:Name="useControllerReadoutCk" FlowDirection="RightToLeft" Content="para lectura" VerticalAlignment="Center"
                                   Margin="8,0,0,0" IsChecked="{Binding UseControllerReadout}"
                                   ToolTip="{lex:Loc Resources:UseControllerForMapping}" Click="UseControllerReadoutCk_Click">
                                 <CheckBox.Resources>
