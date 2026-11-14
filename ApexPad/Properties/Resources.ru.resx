@@ -148,7 +148,7 @@
     <value>Определяет частоту опроса, используемую для оборудования DS4 при подключении через Bluetooth. (Применяется при сохранении профиля)</value>
   </data>
   <data name="CannotMoveFiles" xml:space="preserve">
-    <value>Невозможно переместить файлы в новое место. Пожалуйста переименуйте папку с DS4Tool в "DS4Windows"</value>
+    <value>Невозможно переместить файлы в новое место. Пожалуйста переименуйте папку с DS4Tool в "ApexPad"</value>
   </data>
   <data name="CannotWriteHere" xml:space="preserve">
     <value>Невозможно записать в текущее местоположение. Скопировать настройки в AppData?</value>
@@ -169,10 +169,10 @@
     <value>Это действие отключит подключенные контроллеры. Продолжить?</value>
   </data>
   <data name="CloseDS4W" xml:space="preserve">
-    <value>Закрыть DS4Windows?</value>
+    <value>Закрыть ApexPad?</value>
   </data>
   <data name="CloseMinimize" xml:space="preserve">
-    <value>Закрывать DS4Windows через значок уведомления</value>
+    <value>Закрывать ApexPad через значок уведомления</value>
   </data>
   <data name="Color" xml:space="preserve">
     <value>Цвет</value>
@@ -196,7 +196,7 @@
     <value>Контроллер *Mac address* отключён или связь утеряна!</value>
   </data>
   <data name="CopyComplete" xml:space="preserve">
-    <value>Копирование завершено, пожалуйста перезапустите DS4Windows и удалите настройки из папки программы</value>
+    <value>Копирование завершено, пожалуйста перезапустите ApexPad и удалите настройки из папки программы</value>
   </data>
   <data name="CopyFullColor" xml:space="preserve">
     <value>Нажмите для копирования полного цвета</value>
@@ -239,13 +239,13 @@
     <value>..\Resources\DS4.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DS4Update" xml:space="preserve">
-    <value>Доступна новая версия DS4Windows!</value>
+    <value>Доступна новая версия ApexPad!</value>
   </data>
   <data name="DS4W" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DS4W.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DS4WindowsCannotEditHere" xml:space="preserve">
-    <value>DS4Windows не может изменить настройки! Это приведёт сейчас к закрытию!</value>
+    <value>ApexPad не может изменить настройки! Это приведёт сейчас к закрытию!</value>
   </data>
   <data name="DS4W___White" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DS4W - White.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -311,7 +311,7 @@
     <value>Наведите указатель мыши на пункты для получения подробного описания</value>
   </data>
   <data name="IfRemovingDS4Windows" xml:space="preserve">
-    <value>При удалении DS4Windows, вы можете удалить параметры настройки в папке профиля программы</value>
+    <value>При удалении ApexPad, вы можете удалить параметры настройки в папке профиля программы</value>
   </data>
   <data name="InputDelay" xml:space="preserve">
     <value>Задержка ввода: {0} мс</value>
@@ -335,7 +335,7 @@
     <value>Запоминать размер окна после закрытия</value>
   </data>
   <data name="LanguagePackApplyRestartRequired" xml:space="preserve">
-    <value>Выбранный языковой пакет будет применен после перезапуска приложения DS4Windows.</value>
+    <value>Выбранный языковой пакет будет применен после перезапуска приложения ApexPad.</value>
   </data>
   <data name="LatencyNotOverTen" xml:space="preserve">
     <value>Задержка *number*-го контроллера сейчас меньше 10 мс</value>
@@ -429,7 +429,7 @@
     <value>Правый клик для выбора пресета</value>
   </data>
   <data name="RunAtStartup" xml:space="preserve">
-    <value>Windows запустит DS4Windows после входа</value>
+    <value>Windows запустит ApexPad после входа</value>
   </data>
   <data name="SaveRecordedMacro" xml:space="preserve">
     <value>Сохранить записанный макрос?</value>
@@ -495,7 +495,7 @@
     <value>Ост. лёгкий</value>
   </data>
   <data name="StoppedDS4Windows" xml:space="preserve">
-    <value>Остановлена работа DS4Windows</value>
+    <value>Остановлена работа ApexPad</value>
   </data>
   <data name="StoppingDS4" xml:space="preserve">
     <value>Остановка контроллеров DS4</value>
@@ -567,7 +567,7 @@
     <value>введите сюда имя профиля</value>
   </data>
   <data name="UACTask" xml:space="preserve">
-    <value>Вам нужно запустить DS4Windows от имени Администратора, чтобы активировать этот режим.</value>
+    <value>Вам нужно запустить ApexPad от имени Администратора, чтобы активировать этот режим.</value>
   </data>
   <data name="Unassigned" xml:space="preserve">
     <value>Не назначено</value>

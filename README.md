@@ -44,5 +44,5 @@ Los ejecutables generados se ubicarán localmente en `ApexPad\bin\x64\Release\ne
 Este proyecto se distribuye bajo los términos de la licencia **GNU General Public License version 3 (GPLv3)**. Puedes consultar el texto completo en [LICENSE.txt](LICENSE.txt).
 
 Copyright © 2026 Flavio Morales (`Flavio6931`) — **ApexPad**.
-Co-contribuidores principales: **Flavio Morales** y **Antigravity**.
-Construido sobre el trabajo previo GPLv3 de Scarlet.Crush Productions, InhexSTER, electrobrains, Jays2Kings, Travis Nickles (Ryochan7), schmaldeo y los colaboradores listados en [contributors.txt](contributors.txt).
+Contribuidores de ApexPad ([contributors.txt](contributors.txt)): **Flavio Morales (`Flavio6931`)** y **Antigravity**.
+Construido sobre el trabajo previo GPLv3 de Scarlet.Crush Productions, InhexSTER, electrobrains, Jays2Kings, Travis Nickles (Ryochan7) y schmaldeo.

@@ -1,9 +1,28 @@
 {
-  "latest_version": "3.3.3",
-  "latest_version_number_info": {"majorPart": 3, "minorPart": 3, "buildPart": 3},
-  "updated_at": "2023-12-31T07:01:07+0000",
+  "latest_version": "1.0.0",
+  "latest_version_number_info": {"majorPart": 1, "minorPart": 0, "buildPart": 0},
+  "updated_at": "2026-11-14T16:00:00+0000",
   "changelog": {
     "versions": [
+    {
+      "version_str": "1.0.0",
+      "version_number_info": {"majorPart": 1, "minorPart": 0, "buildPart": 0},
+      "base_header": "ApexPad 1.0.0",
+      "release_date": "2026-11-14T16:00:00+0000",
+      "locales": [
+        {
+          "code": "en",
+          "header": "ApexPad 1.0.0",
+          "log_text": ["* Initial standalone release of ApexPad v1.0.0 (x64 & x86)",
+            "* Low-latency HID I/O loop with SIMD Span<byte> copy and ThreadPriority.Highest",
+            "* 1000 Hz Bluetooth poll rate, Hair Trigger L2/R2, Vector Radial Deadzone & OneEuro gyro filter enabled by default",
+            "* Isolated AppData, IPC, task scheduler (RunApexPad) and DWM dark title bar"],
+          "editor": "Flavio6931",
+          "editors_note": ["Developed by Flavio Morales (Flavio6931) & Antigravity"],
+          "updated_at": "2026-11-14T16:00:00+0000"
+        }
+      ]
+    },
     {
       "version_str": "3.3.3",
       "version_number_info": {"majorPart": 3, "minorPart": 3, "buildPart": 3},

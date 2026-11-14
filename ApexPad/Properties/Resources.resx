@@ -148,7 +148,7 @@
     <value>Determines the poll rate used for the DS4 hardware when connected via Bluetooth. (Applies on profile save)</value>
   </data>
   <data name="CannotMoveFiles" xml:space="preserve">
-    <value>Cannot move files to new location, Please rename the DS4Tool folder to "DS4Windows"</value>
+    <value>Cannot move files to new location, Please rename the DS4Tool folder to "ApexPad"</value>
   </data>
   <data name="CannotWriteHere" xml:space="preserve">
     <value>Cannot write at current location. Copy Settings to appdata?</value>
@@ -398,7 +398,7 @@
     <value>, other location files will be deleted</value>
   </data>
   <data name="PleaseDownloadUpdater" xml:space="preserve">
-    <value>Please Download the Updater now, place it in the programs folder and rename to DS4Updater.exe if on x86, then check for update again. DS4Windows will attempt to open DS4Updater Release page when this window is closed.</value>
+    <value>Please Download the Updater now, place it in the programs folder and rename to DS4Updater.exe if on x86, then check for update again. ApexPad will attempt to open DS4Updater Release page when this window is closed.</value>
   </data>
   <data name="PleaseImport" xml:space="preserve">
     <value>Please import or make a profile</value>
@@ -566,7 +566,7 @@
     <value>type profile name here</value>
   </data>
   <data name="UACTask" xml:space="preserve">
-    <value>You need to run DS4Windows as the Administrator in order to activate this mode.</value>
+    <value>You need to run ApexPad as the Administrator in order to activate this mode.</value>
   </data>
   <data name="Unassigned" xml:space="preserve">
     <value>Unassigned</value>
@@ -575,7 +575,7 @@
     <value>Up</value>
   </data>
   <data name="UpToDate" xml:space="preserve">
-    <value>DS4Windows application is up-to-date.</value>
+    <value>ApexPad application is up-to-date.</value>
   </data>
   <data name="UseControllerForMapping" xml:space="preserve">
     <value>You can also use your controller to change controls</value>

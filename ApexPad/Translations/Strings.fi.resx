@@ -348,7 +348,7 @@ Muutokset tähän asetukseen tulevat voimaan peliohjaimen yhteyden aikana.</valu
     <value>Mukautettu Exe-nimi</value>
   </data>
   <data name="CustomExeNameInfo" xml:space="preserve">
-    <value>Jotkut pelit toteuttavat lohkon, joka ohittaa DS4-syötteen, jos peli havaitsee joko DS4Windows.exe- tai InputMapper.exe-tiedoston sillä hetkellä käynnissä. Kiertokeino estoon on nimetä DS4Windows.exe uudelleen, jotta pelin tarkistus epäonnistuu. Kun määrität mukautetun exe-nimen tässä, DS4Updater voi päivittää mukautetun DS4Windows-kopion automaattisesti haluttuun tiedostonimeen. Muista jättää laajennus pois.
+    <value>Jotkut pelit toteuttavat lohkon, joka ohittaa DS4-syötteen, jos peli havaitsee joko ApexPad.exe- tai InputMapper.exe-tiedoston sillä hetkellä käynnissä. Kiertokeino estoon on nimetä ApexPad.exe uudelleen, jotta pelin tarkistus epäonnistuu. Kun määrität mukautetun exe-nimen tässä, DS4Updater voi päivittää mukautetun ApexPad-kopion automaattisesti haluttuun tiedostonimeen. Muista jättää laajennus pois.
 
 Esimerkki: Whyme_DS4Windows</value>
   </data>
@@ -437,13 +437,13 @@ Esimerkki: Whyme_DS4Windows</value>
     <value>Tosimaailman kalibrointi</value>
   </data>
   <data name="ViGEmPluginFailure" xml:space="preserve">
-    <value>ViGEm Device Plugin epäonnistui. Todennäköisesti sisäinen ViGEmBus-ongelma. Yhteyden sulkeminen. Jos ongelma jatkuu, sulje DS4Windows ja käynnistä Windows uudelleen.</value>
+    <value>ViGEm Device Plugin epäonnistui. Todennäköisesti sisäinen ViGEmBus-ongelma. Yhteyden sulkeminen. Jos ongelma jatkuu, sulje ApexPad ja käynnistä Windows uudelleen.</value>
   </data>
   <data name="CRC32Fail" xml:space="preserve">
     <value>Langattoman laitteen tietojen eheystarkistukset epäonnistuivat. Sulkeva laite.</value>
   </data>
   <data name="FutureNetNotInstalled" xml:space="preserve">
-    <value>.NET 5 Runtimea ei havaittu järjestelmästäsi. Lataa ja asenna .NET 5 Runtime varmistaaksesi yhteensopivuuden tulevien DS4Windows-versioiden kanssa. Sinut ohjataan .NET 5 Runtime -lataussivulle, kun suljet tämän ikkunan.</value>
+    <value>.NET 5 Runtimea ei havaittu järjestelmästäsi. Lataa ja asenna .NET 5 Runtime varmistaaksesi yhteensopivuuden tulevien ApexPad-versioiden kanssa. Sinut ohjataan .NET 5 Runtime -lataussivulle, kun suljet tämän ikkunan.</value>
   </data>
   <data name="UpgradeNetCaption" xml:space="preserve">
     <value>Päivitä .NET Runtime</value>
@@ -656,7 +656,7 @@ Liikuntarajoitteinen:
     <value>Vaihda Profiileja Pyyhkäisemällä Kosketuslevyä</value>
   </data>
   <data name="TurnOffDS4WindowsTemporarily" xml:space="preserve">
-    <value>Sammuta DS4Windows Väliaikaisesti</value>
+    <value>Sammuta ApexPad Väliaikaisesti</value>
   </data>
   <data name="Unplug" xml:space="preserve">
     <value>Irrota Pistoke</value>

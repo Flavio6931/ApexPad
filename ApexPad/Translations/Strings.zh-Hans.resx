@@ -414,7 +414,7 @@
     <comment/>
   </data>
   <data name="CustomExeNameInfo" xml:space="preserve">
-    <value>一些游戏如果测到DS4Windows.exe 或 InputMapper.exe 正在运行，则会忽略 DS4 的输入。对于这些游戏，解决方法是将 DS4Windows.exe 重命名，以规避检测。在这样自定义可执行文件的名称，以允许 DS4Updater 自动更新已被重命名的DS4Windows。请不要输入扩展名（即 .exe)。名称示例: whyme_DS4Windows</value>
+    <value>一些游戏如果测到ApexPad.exe 或 InputMapper.exe 正在运行，则会忽略 DS4 的输入。对于这些游戏，解决方法是将 ApexPad.exe 重命名，以规避检测。在这样自定义可执行文件的名称，以允许 DS4Updater 自动更新已被重命名的DS4Windows。请不要输入扩展名（即 .exe)。名称示例: whyme_ApexPad</value>
     <comment/>
   </data>
   <data name="XInputChecker" xml:space="preserve">
@@ -534,7 +534,7 @@
     <comment/>
   </data>
   <data name="FutureNetNotInstalled" xml:space="preserve">
-    <value>未检测到 .NET 5 运行时。请下载并安装 .NET 5 运行时，以确保与未来的 DS4Windows 版本兼容。关闭此窗口后，您将被重定向到 .NET 5 运行时下载页。</value>
+    <value>未检测到 .NET 5 运行时。请下载并安装 .NET 5 运行时，以确保与未来的 ApexPad 版本兼容。关闭此窗口后，您将被重定向到 .NET 5 运行时下载页。</value>
     <comment/>
   </data>
   <data name="UpgradeNetCaption" xml:space="preserve">
@@ -764,7 +764,7 @@
     <comment/>
   </data>
   <data name="TurnOffDS4WindowsTemporarily" xml:space="preserve">
-    <value>临时关闭 DS4Windows</value>
+    <value>临时关闭 ApexPad</value>
     <comment/>
   </data>
   <data name="Unplug" xml:space="preserve">
@@ -1279,7 +1279,7 @@
     <value>常规</value>
   </data>
   <data name="SaveWhere.AppDataDescText" xml:space="preserve">
-    <value>对于那些偏好常规安装的人，设置保存路径在 %appdata%\DS4Windows</value>
+    <value>对于那些偏好常规安装的人，设置保存路径在 %appdata%\ApexPad</value>
   </data>
   <data name="SaveWhere.DontDelete" xml:space="preserve">
     <value>先不要删除其他设置</value>
@@ -1381,7 +1381,7 @@
     <value>是</value>
   </data>
   <data name="Welcome.WinTitle" xml:space="preserve">
-    <value>欢迎来到 DS4Windows</value>
+    <value>欢迎来到 ApexPad</value>
   </data>
   <data name="Welcome.Step1HelpText" xml:space="preserve">
     <value>如果这个窗口在安装完成后再次出现，你可能需要重新启动你的电脑。</value>

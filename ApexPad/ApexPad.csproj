@@ -8,7 +8,7 @@
 		<RuntimeIdentifiers>win-x64;win-x86</RuntimeIdentifiers>
 		<RootNamespace>DS4WinWPF</RootNamespace>
 		<AssemblyName>ApexPad</AssemblyName>
-		<ApplicationIcon>DS4W.ico</ApplicationIcon>
+		<ApplicationIcon>ApexPad.ico</ApplicationIcon>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<StartupObject>DS4WinWPF.App</StartupObject>
 		<NeutralLanguage>en</NeutralLanguage>

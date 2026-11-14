@@ -45,7 +45,7 @@
         <value>决定使用蓝牙连接的DS4硬件的回报率（当配置保存时应用）</value>
     </data>
     <data name="CannotMoveFiles" xml:space="preserve">
-        <value>无法移动文件到新位置，请把DS4Tool文件夹重命名为"DS4Windows"</value>
+        <value>无法移动文件到新位置，请把DS4Tool文件夹重命名为"ApexPad"</value>
     </data>
     <data name="CannotWriteHere" xml:space="preserve">
         <value>无法在当前位置写入，把设置复制到appdata？</value>

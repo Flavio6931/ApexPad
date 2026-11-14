@@ -89,6 +89,13 @@ namespace DS4WindowsTests
   <idleDisconnectTimeout>0</idleDisconnectTimeout>
   <outputDataToDS4>True</outputDataToDS4>
   <Color>0,0,255</Color>
+  <LeftStickDriftXAxis>0</LeftStickDriftXAxis>
+  <LeftStickDriftYAxis>0</LeftStickDriftYAxis>
+  <RightStickDriftXAxis>0</RightStickDriftXAxis>
+  <RightStickDriftYAxis>0</RightStickDriftYAxis>
+  <DebouncingMs>0</DebouncingMs>
+  <InverseRumbleMotors>false</InverseRumbleMotors>
+  <UseDs3PitchRollSim>false</UseDs3PitchRollSim>
   <RumbleBoost>100</RumbleBoost>
   <RumbleAutostopTime>0</RumbleAutostopTime>
   <LightbarMode>DS4Win</LightbarMode>
@@ -256,7 +263,7 @@ namespace DS4WindowsTests
     <XAxis>Yaw</XAxis>
     <DelayTime>0</DelayTime>
   </GyroSwipeSettings>
-  <BTPollRate>4</BTPollRate>
+  <BTPollRate>1</BTPollRate>
   <LSOutputCurveMode>linear</LSOutputCurveMode>
   <RSOutputCurveMode>linear</RSOutputCurveMode>
   <LSSquareStick>False</LSSquareStick>

@@ -348,9 +348,9 @@
     <value>自定義 Exe 名稱</value>
   </data>
   <data name="CustomExeNameInfo" xml:space="preserve">
-    <value>如果遊戲檢測到當時正在運行的 DS4Windows.exe 或 InputMapper.exe ，則某些遊戲執行的攔阻會導致忽略DS4的輸入。 解決該問題的方法是重命名 DS4Windows.exe ，以便讓遊戲中的檢查失效。 在此處指定自定義的 exe 執行檔名稱可以使 DS4Updater 自動將 DS4Windows 的自定義副本更新為想要的檔名。 確保省略副檔名。
+    <value>如果遊戲檢測到當時正在運行的 ApexPad.exe 或 InputMapper.exe ，則某些遊戲執行的攔阻會導致忽略DS4的輸入。 解決該問題的方法是重命名 ApexPad.exe ，以便讓遊戲中的檢查失效。 在此處指定自定義的 exe 執行檔名稱可以使 DS4Updater 自動將 ApexPad 的自定義副本更新為想要的檔名。 確保省略副檔名。
 
-例如: whyme_DS4Windows</value>
+例如: whyme_ApexPad</value>
   </data>
   <data name="XInputChecker" xml:space="preserve">
     <value>XInputChecker</value>
@@ -443,13 +443,13 @@ Maps the controller output to mixed XInput gamepad + RS mouse.</value>
     <value>現實世界的校準</value>
   </data>
   <data name="ViGEmPluginFailure" xml:space="preserve">
-    <value>ViGEm 裝置插件失敗。可能是 ViGEmBus 的內部問題。關閉連接。如果問題仍然存在，請關閉 DS4Windows，然後重新啟動 Windows。</value>
+    <value>ViGEm 裝置插件失敗。可能是 ViGEmBus 的內部問題。關閉連接。如果問題仍然存在，請關閉 ApexPad，然後重新啟動 Windows。</value>
   </data>
   <data name="CRC32Fail" xml:space="preserve">
     <value>無線設備的數據完整性檢查失敗。 關閉設備。</value>
   </data>
   <data name="FutureNetNotInstalled" xml:space="preserve">
-    <value>.NET 5 Runtime 未在您的系統上檢測到。 請下載並安裝 .NET 5 Runtime，以確保與未來 DS4Windows 構建的兼容性。 關閉此窗口後，您將重定向到 .NET 5 Runtime 下載頁面。</value>
+    <value>.NET 5 Runtime 未在您的系統上檢測到。 請下載並安裝 .NET 5 Runtime，以確保與未來 ApexPad 構建的兼容性。 關閉此窗口後，您將重定向到 .NET 5 Runtime 下載頁面。</value>
   </data>
   <data name="UpgradeNetCaption" xml:space="preserve">
     <value>請更新 .NET Runtime</value>

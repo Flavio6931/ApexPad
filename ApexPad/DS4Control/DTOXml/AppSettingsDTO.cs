@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -239,10 +240,13 @@ namespace DS4WinWPF.DS4Control.DTOXml
         [XmlElement("LastChecked")]
         public string LastCheckString
         {
-            get => LastChecked.ToString("MM/dd/yyyy HH:mm:ss");
+            // Usa InvariantCulture para evitar invertir mes/día en configuraciones regionales dd/MM/yyyy
+            get => LastChecked.ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
             set
             {
-                if (DateTime.TryParse(value, out DateTime temp))
+                if (DateTime.TryParseExact(value, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime temp) ||
+                    DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out temp) ||
+                    DateTime.TryParse(value, out temp))
                 {
                     LastChecked = temp;
                 }

@@ -347,9 +347,9 @@
     <value>Nombre del exe personalizado</value>
   </data>
   <data name="CustomExeNameInfo" xml:space="preserve">
-    <value>Algunos juegos implementan un bloqueo que hace que la entrada de DS4 sea ignorada si un juego detecta que DS4Windows.exe o InputMapper.exe se está ejecutando en ese momento. Una solución alternativa al bloqueo es cambiar el nombre de DS4Windows.exe para que la comprobación del juego falle. Si especifica un nombre de exe personalizado aquí, DS4Updater podrá actualizar automáticamente una copia personalizada de DS4Windows con el nombre de archivo deseado. Asegúrese de omitir la extensión.
+    <value>Algunos juegos implementan un bloqueo que hace que la entrada de DS4 sea ignorada si un juego detecta que ApexPad.exe o InputMapper.exe se está ejecutando en ese momento. Una solución alternativa al bloqueo es cambiar el nombre de ApexPad.exe para que la comprobación del juego falle. Si especifica un nombre de exe personalizado aquí, DS4Updater podrá actualizar automáticamente una copia personalizada de ApexPad con el nombre de archivo deseado. Asegúrese de omitir la extensión.
     
-    Ejemplo: oculto_DS4Windows</value>
+    Ejemplo: oculto_ApexPad</value>
   </data>
   <data name="XInputChecker" xml:space="preserve">
     <value>XInputChecker</value>

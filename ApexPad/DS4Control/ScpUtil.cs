@@ -3292,39 +3292,49 @@ namespace DS4Windows
 
     public class Changelog
     {
-        public const string GITHUB_RELEASES_API_URI = "https://api.github.com/repos/schmaldeo/DS4Windows/releases";
-        public const string GITHUB_LATEST_RELEASE_API_URI = "https://api.github.com/repos/schmaldeo/DS4Windows/releases/latest";
-
-        private static bool? _newerVersionAvailable = null;
-        private static Version _latestVersion;
+        public const string GITHUB_RELEASES_API_URI = "https://api.github.com/repos/Flavio6931/ApexPad/releases";
+        public const string GITHUB_LATEST_RELEASE_API_URI = "https://api.github.com/repos/Flavio6931/ApexPad/releases/latest";
 
         /// <summary>
-        /// Comprobador de actualizaciones desactivado para proteger el fork personalizado contra sobreescrituras.
+        /// Comprobador de actualizaciones desactivado para proteger la compilación local contra sobreescrituras externas.
         /// </summary>
         public static bool CheckNewerVersionExists(out Version version, bool allowCached = true)
         {
-            version = Version.Parse("4.0.0");
-            _newerVersionAvailable = false;
+            version = Version.Parse("1.0.0");
             return false;
         }
 
+        /// <summary>
+        /// Obtiene el historial de versiones desde GitHub Releases de ApexPad de forma segura.
+        /// </summary>
         public static async Task<Dictionary<Version, string>> GetChangelog(bool allVersions = false)
         {
             Dictionary<Version, string> dict = new();
 
             if (!Version.TryParse(Global.exeversion, out var currentVersion)) return dict;
 
-            var request = await App.requestClient.GetAsync(GITHUB_RELEASES_API_URI);
-            var releases = await request.Content.ReadFromJsonAsync<GithubRelease[]>();
-
-            foreach (var release in releases)
+            try
             {
-                if (release.PreRelease) continue;
+                var request = await App.requestClient.GetAsync(GITHUB_RELEASES_API_URI);
+                if (!request.IsSuccessStatusCode) return dict;
 
-                if (!Version.TryParse(release.TagName[1..], out var parsedVersion)) continue;
+                var releases = await request.Content.ReadFromJsonAsync<GithubRelease[]>();
+                if (releases == null) return dict;
 
-                if (!allVersions && parsedVersion <= currentVersion) break;
-                dict.Add(parsedVersion, release.Body);
+                foreach (var release in releases)
+                {
+                    if (release.PreRelease || string.IsNullOrEmpty(release.TagName)) continue;
+
+                    string tag = release.TagName.TrimStart('v', 'V');
+                    if (!Version.TryParse(tag, out var parsedVersion)) continue;
+
+                    if (!allVersions && parsedVersion <= currentVersion) break;
+                    dict.Add(parsedVersion, release.Body ?? string.Empty);
+                }
+            }
+            catch
+            {
+                // Ignora fallos de red o ausencia de releases remotos sin bloquear la ventana
             }
 
             return dict;
@@ -3342,6 +3352,11 @@ namespace DS4Windows
                 sb.Append(Environment.NewLine);
                 var parsedChangelog = ParseChangelogString(version.Value);
                 sb.Append(parsedChangelog);
+            }
+
+            if (sb.Length == 0)
+            {
+                sb.Append($"## ApexPad v{Global.exeversion}{Environment.NewLine}* Suite de baja latencia por Flavio Morales (Flavio6931) & Antigravity.");
             }
 
             return sb.ToString();
