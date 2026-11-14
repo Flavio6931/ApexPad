@@ -78,4 +78,5 @@ xrossb
 Ygov
 Yohoki
 Yuki
-Flavio Morales (Flavio6931) - ApexPad Fork & Latency Optimizations
+Flavio Morales (Flavio6931) - Author & Maintainer (ApexPad)
+Antigravity - Co-Contributor (Architecture & Optimizations)

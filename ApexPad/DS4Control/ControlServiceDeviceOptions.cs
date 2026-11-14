@@ -96,7 +96,7 @@ namespace DS4Windows
 
     public class DS3DeviceOptions
     {
-        public const bool DEFAULT_ENABLE = false;
+        public const bool DEFAULT_ENABLE = true;
         private bool enabled = DEFAULT_ENABLE;
         public bool Enabled
         {
@@ -195,7 +195,7 @@ namespace DS4Windows
 
     public class DualSenseDeviceOptions
     {
-        public const bool DEFAULT_ENABLE = false;
+        public const bool DEFAULT_ENABLE = true;
         private bool enabled = DEFAULT_ENABLE;
         public bool Enabled
         {
@@ -324,7 +324,7 @@ namespace DS4Windows
 
     public class SwitchProDeviceOptions
     {
-        public const bool DEFAULT_ENABLE = false;
+        public const bool DEFAULT_ENABLE = true;
         private bool enabled = DEFAULT_ENABLE;
         public bool Enabled
         {
@@ -424,7 +424,7 @@ namespace DS4Windows
 
     public class JoyConDeviceOptions
     {
-        public const bool DEFAULT_ENABLE = false;
+        public const bool DEFAULT_ENABLE = true;
         private bool enabled = DEFAULT_ENABLE;
         public bool Enabled
         {

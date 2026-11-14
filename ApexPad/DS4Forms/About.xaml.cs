@@ -45,6 +45,12 @@ namespace DS4WinWPF.DS4Forms
             Util.StartProcessHelper("https://github.com/Flavio6931/ApexPad");
         }
 
+        /// <summary>Abre el perfil de GitHub del autor Flavio Morales.</summary>
+        private void FlavioLink_Click(object sender, RoutedEventArgs e)
+        {
+            Util.StartProcessHelper("https://github.com/Flavio6931");
+        }
+
         private void SchmaldeoLink_Click(object sender, RoutedEventArgs e)
         {
             Util.StartProcessHelper("https://github.com/schmaldeo");
@@ -107,7 +113,7 @@ namespace DS4WinWPF.DS4Forms
 
         private void ContributorsLink_OnClick(object sender, RoutedEventArgs e)
         {
-            Util.StartProcessHelper("https://github.com/schmaldeo/DS4Windows/blob/master/contributors.txt");
+            Util.StartProcessHelper("https://github.com/Flavio6931/ApexPad/blob/main/contributors.txt");
         }
     }
 }

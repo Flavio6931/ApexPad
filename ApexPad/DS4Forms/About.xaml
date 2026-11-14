@@ -714,11 +714,13 @@ Public License instead of this License.  But first, please read
                         <StackPanel Orientation="Horizontal">
                             <TextBlock><Hyperlink x:Name="officialWebsiteLink" Click="OfficialWebsiteLink_Click" Foreground="{DynamicResource AccentColor}">Official Website</Hyperlink></TextBlock>
                             <TextBlock Margin="20,0,0,0"><Hyperlink x:Name="sourceLink" Click="SourceLink_Click" Foreground="{DynamicResource AccentColor}">Source</Hyperlink></TextBlock>
-                            <TextBlock Margin="20,0,0,0"><Hyperlink x:Name="schmaldeoLink" Click="SchmaldeoLink_Click" Foreground="{DynamicResource AccentColor}">Schmaldeo</Hyperlink></TextBlock>
-                            <TextBlock Margin="20,0,0,0"><Hyperlink Click="Ryochan7Link_Click" Foreground="{DynamicResource AccentColor}">Ryochan7</Hyperlink></TextBlock>
+                            <TextBlock Margin="20,0,0,0"><Hyperlink x:Name="flavioLink" Click="FlavioLink_Click" Foreground="{DynamicResource AccentColor}">Flavio Morales (Flavio6931)</Hyperlink></TextBlock>
+                            <TextBlock Margin="20,0,0,0" Text="Co-Contributor: Antigravity" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock><Hyperlink x:Name="jays2KingsLink" Click="Jays2KingsLink_Click" Foreground="{DynamicResource AccentColor}">Jays2Kings</Hyperlink></TextBlock>
+                            <TextBlock><Hyperlink x:Name="schmaldeoLink" Click="SchmaldeoLink_Click" Foreground="{DynamicResource AccentColor}">Schmaldeo</Hyperlink></TextBlock>
+                            <TextBlock Margin="20,0,0,0"><Hyperlink Click="Ryochan7Link_Click" Foreground="{DynamicResource AccentColor}">Ryochan7</Hyperlink></TextBlock>
+                            <TextBlock Margin="20,0,0,0"><Hyperlink x:Name="jays2KingsLink" Click="Jays2KingsLink_Click" Foreground="{DynamicResource AccentColor}">Jays2Kings</Hyperlink></TextBlock>
                             <TextBlock Margin="20,0,0,0"><Hyperlink x:Name="inhexSTERLink" Click="InhexSTERLink_Click" Foreground="{DynamicResource AccentColor}">InhexSTER (Starter of DS4Tool)</Hyperlink></TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">

@@ -329,8 +329,8 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 
-!DS4Windows/libs/x64/
-!DS4Windows/libs/x86/
+!ApexPad/libs/x64/
+!ApexPad/libs/x86/
 
 
 # Distribution and setup packages

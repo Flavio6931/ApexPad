@@ -25,20 +25,24 @@ Basado en el motor open-source **DS4Windows** (Jays2Kings, Ryochan7, schmaldeo) 
 - **Dependencias nativas:** Visual C++ 2015–2022 Redistributable (x64).
 - **Driver virtual:** [ViGEmBus](https://github.com/nefarius/ViGEmBus/releases) (y opcionalmente HidHide / FakerInput).
 
-## Compilación desde Código Fuente
+## Compilación desde Código Fuente (32 bits y 64 bits)
 
 > Por seguridad y cumplimiento de políticas de plataforma, este repositorio contiene **únicamente código fuente** (sin ejecutables `.exe` ni archivos `.zip` precompilados).
 
 ```powershell
 dotnet restore ApexPad.sln
+# Compilar versión 64 bits (x64)
 dotnet build ApexPad.sln -c Release /p:Platform=x64
+# Compilar versión 32 bits (x86)
+dotnet build ApexPad.sln -c Release /p:Platform=x86
 ```
 
-El ejecutable generado se ubicará localmente en `DS4Windows\bin\x64\Release\net8.0-windows\ApexPad.exe`.
+Los ejecutables generados se ubicarán localmente en `ApexPad\bin\x64\Release\net8.0-windows\ApexPad.exe` y `ApexPad\bin\x86\Release\net8.0-windows\ApexPad.exe`.
 
 ## Licencia y Atribución (GNU GPLv3)
 
 Este proyecto se distribuye bajo los términos de la licencia **GNU General Public License version 3 (GPLv3)**. Puedes consultar el texto completo en [LICENSE.txt](LICENSE.txt).
 
-Copyright © 2026 Flavio Morales (ApexPad).
+Copyright © 2026 Flavio Morales (`Flavio6931`) — **ApexPad**.
+Co-contribuidores principales: **Flavio Morales** y **Antigravity**.
 Construido sobre el trabajo previo GPLv3 de Scarlet.Crush Productions, InhexSTER, electrobrains, Jays2Kings, Travis Nickles (Ryochan7), schmaldeo y los colaboradores listados en [contributors.txt](contributors.txt).
