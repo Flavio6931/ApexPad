@@ -355,3 +355,10 @@ secrets.*
 credentials.*
 *.key
 *.pem
+
+# Local agent context, memory, GitHub workflows & Obsidian metadata
+.agents/
+.github/
+.project-memory/
+.obsidian/
+.obsidian_vault
