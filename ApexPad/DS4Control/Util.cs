@@ -188,6 +188,51 @@ namespace DS4Windows
             return hr == 0;
         }
 
+        private const int ProcessPowerThrottling = 4;
+        private const uint PROCESS_POWER_THROTTLING_CURRENT_VERSION = 1;
+        private const uint PROCESS_POWER_THROTTLING_EXECUTION_SPEED = 0x1;
+        private const uint PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION = 0x4;
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct PROCESS_POWER_THROTTLING_STATE
+        {
+            public uint Version;
+            public uint ControlMask;
+            public uint StateMask;
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetProcessInformation(IntPtr hProcess, int ProcessInformationClass,
+            ref PROCESS_POWER_THROTTLING_STATE ProcessInformation, int ProcessInformationSize);
+
+        /// <summary>
+        /// Desactiva EcoQoS y el throttling de resolucion de temporizador en Windows 10/11
+        /// para evitar caidas de frecuencia o migracion a nucleos lentos al minimizar.
+        /// </summary>
+        public static void DisableProcessPowerThrottling()
+        {
+            try
+            {
+                using var curProc = Process.GetCurrentProcess();
+                int size = Marshal.SizeOf<PROCESS_POWER_THROTTLING_STATE>();
+                var state = new PROCESS_POWER_THROTTLING_STATE
+                {
+                    Version = PROCESS_POWER_THROTTLING_CURRENT_VERSION,
+                    ControlMask = PROCESS_POWER_THROTTLING_EXECUTION_SPEED | PROCESS_POWER_THROTTLING_IGNORE_TIMER_RESOLUTION,
+                    StateMask = 0,
+                };
+
+                if (!SetProcessInformation(curProc.Handle, ProcessPowerThrottling, ref state, size))
+                {
+                    // Fallback para versiones de Windows 10 sin flag IGNORE_TIMER_RESOLUTION
+                    state.ControlMask = PROCESS_POWER_THROTTLING_EXECUTION_SPEED;
+                    SetProcessInformation(curProc.Handle, ProcessPowerThrottling, ref state, size);
+                }
+            }
+            catch { }
+        }
+
         /// <summary>
         /// Libera memoria de trabajo y purga el working set de la aplicacion al minimizar a la bandeja.
         /// </summary>

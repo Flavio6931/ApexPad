@@ -321,7 +321,7 @@ namespace DS4Windows.InputDevices
                 // Device is open. Create Reader Input thread
                 ds4Input = new Thread(ReadInput);
                 ds4Input.IsBackground = true;
-                ds4Input.Priority = ThreadPriority.AboveNormal;
+                ds4Input.Priority = ThreadPriority.Highest;
                 ds4Input.Name = "Switch Pro Reader Thread";
                 ds4Input.Start();
             }

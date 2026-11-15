@@ -115,6 +115,9 @@ namespace DS4WinWPF
             DS4Windows.Util.NtSetInformationProcess(Process.GetCurrentProcess().Handle,
                 DS4Windows.Util.PROCESS_INFORMATION_CLASS.ProcessPagePriority, ref pagePrio, 4);
 
+            // Evitar EcoQoS y degradacion del temporizador al minimizar en Windows 10/11
+            DS4Windows.Util.DisableProcessPowerThrottling();
+
             // another instance is already running if TryOpenExisting returns true.
             try
             {
@@ -150,7 +153,7 @@ namespace DS4WinWPF
             CreateTempWorkerThread();
 
             CreateControlService(parser);
-            RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
+            RenderOptions.ProcessRenderMode = RenderMode.Default;
 
             DS4Windows.Global.FindConfigLocation();
             bool firstRun = DS4Windows.Global.firstRun;
@@ -538,7 +541,13 @@ namespace DS4WinWPF
 
         private void GarbageTask(object state)
         {
-            GC.Collect(0, GCCollectionMode.Forced, false);
+            // No interrumpir SustainedLowLatency mientras el servicio de mandos esta activo
+            if (rootHub != null && rootHub.running)
+            {
+                return;
+            }
+
+            GC.Collect(0, GCCollectionMode.Optimized, false);
         }
 
         private void CreateTempWorkerThread()
