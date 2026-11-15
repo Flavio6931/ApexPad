@@ -4041,15 +4041,21 @@ namespace DS4Windows
 
         private void SetupDefaultColors()
         {
-            lightbarSettingInfo[0].ds4winSettings.m_Led = new DS4Color(Color.Blue);
-            lightbarSettingInfo[1].ds4winSettings.m_Led = new DS4Color(Color.Red);
-            lightbarSettingInfo[2].ds4winSettings.m_Led = new DS4Color(Color.Green);
-            lightbarSettingInfo[3].ds4winSettings.m_Led = new DS4Color(Color.Pink);
-            lightbarSettingInfo[4].ds4winSettings.m_Led = new DS4Color(Color.Blue);
-            lightbarSettingInfo[5].ds4winSettings.m_Led = new DS4Color(Color.Red);
-            lightbarSettingInfo[6].ds4winSettings.m_Led = new DS4Color(Color.Green);
-            lightbarSettingInfo[7].ds4winSettings.m_Led = new DS4Color(Color.Pink);
-            lightbarSettingInfo[8].ds4winSettings.m_Led = new DS4Color(Color.White);
+            Color[] baseColors =
+            {
+                Color.Blue, Color.Red, Color.Green, Color.Pink,
+                Color.Blue, Color.Red, Color.Green, Color.Pink, Color.White
+            };
+
+            for (int i = 0; i < baseColors.Length && i < lightbarSettingInfo.Length; i++)
+            {
+                LightbarDS4WinInfo lightInfo = lightbarSettingInfo[i].ds4winSettings;
+                lightInfo.m_Led = new DS4Color(baseColors[i]);
+                lightInfo.m_LowLed = new DS4Color(Color.Red);
+                lightInfo.m_FlashLed = new DS4Color(Color.Red);
+                lightInfo.flashAt = 20;
+                lightInfo.ledAsBattery = true;
+            }
         }
 
         public void CacheExtraProfileInfo(int device)
@@ -9578,7 +9584,7 @@ namespace DS4Windows
             LightbarSettingInfo lightbarSettings = lightbarSettingInfo[device];
             LightbarDS4WinInfo lightInfo = lightbarSettings.ds4winSettings;
             lightbarSettings.Mode = LightbarMode.DS4Win;
-            lightInfo.m_LowLed = new DS4Color(Color.Black);
+            lightInfo.m_LowLed = new DS4Color(Color.Red);
             //m_LowLeds[device] = new DS4Color(Color.Black);
 
             Color tempColor = Color.Blue;
@@ -9598,13 +9604,13 @@ namespace DS4Windows
 
             lightInfo.m_Led = new DS4Color(tempColor);
             lightInfo.m_ChargingLed = new DS4Color(Color.Black);
-            lightInfo.m_FlashLed = new DS4Color(Color.Black);
-            lightInfo.flashAt = 0;
+            lightInfo.m_FlashLed = new DS4Color(Color.Red);
+            lightInfo.flashAt = 20;
             lightInfo.flashType = 0;
             lightInfo.chargingType = 0;
             lightInfo.rainbow = 0;
             lightInfo.maxRainbowSat = LightbarDS4WinInfo.DEFAULT_MAX_RAINBOW_SAT;
-            lightInfo.ledAsBattery = false;
+            lightInfo.ledAsBattery = true;
 
             launchProgram[device] = string.Empty;
             dinputOnly[device] = DEFAULT_DINPUT_ONLY;

@@ -1181,7 +1181,7 @@
                                         </StackPanel>
                                     </GroupBox>
 
-                                    <GroupBox x:Name="emptyColorGB" Header="Empty" Padding="4">
+                                    <GroupBox x:Name="emptyColorGB" Header="Vacía" Padding="4">
                                         <StackPanel>
 
                                             <StackPanel Orientation="Horizontal">
@@ -1203,8 +1203,8 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                                     <ComboBox x:Name="flashTypeCombo" SelectedIndex="{Binding FlashTypeIndex,FallbackValue=0}">
-                                        <ComboBoxItem Content="Flash at"/>
-                                        <ComboBoxItem Content="Pulse at"/>
+                                        <ComboBoxItem Content="Parpadear al ≤"/>
+                                        <ComboBoxItem Content="Pulsar al ≤"/>
                                     </ComboBox>
                                     <xctk:IntegerUpDown d:IsHidden="True" Value="{Binding FlashAt,FallbackValue=0}" MinWidth="50"
                                             Minimum="-10" Maximum="100" Increment="10" />
@@ -1214,18 +1214,18 @@
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                    <Label Content="While Charging:"/>
+                                    <Label Content="Mientras carga:"/>
                                     <ComboBox Margin="8,0,0,0" SelectedIndex="{Binding ChargingType,FallbackValue=0}">
                                         <ComboBoxItem Content="Normal" />
-                                        <ComboBoxItem Content="Pulse" />
-                                        <ComboBoxItem Content="Rainbow" />
+                                        <ComboBoxItem Content="Pulso" />
+                                        <ComboBoxItem Content="Arcoíris" />
                                         <ComboBoxItem Content="Color" />
                                     </ComboBox>
                                     <Button x:Name="chargingColorBtn" Width="20" Height="20" Background="{Binding ChargingColor,FallbackValue=Blue}"
                                 Visibility="{Binding ChargingColorVisible}" Click="ChargingColorBtn_Click" Margin="20,0,0,0" />
                                 </StackPanel>
 
-                                <CheckBox x:Name="colorByBatteryPerCk" Content="Color by Battery %" IsChecked="{Binding ColorBatteryPercent}"
+                                <CheckBox x:Name="colorByBatteryPerCk" Content="Color según % de batería" IsChecked="{Binding ColorBatteryPercent}"
                               ToolTip="{lex:Loc Resources:LightByBatteryTip}" Click="ColorByBatteryPerCk_Click" Margin="0,10,0,0" />
 
                                 <StackPanel Orientation="Horizontal" Height="60" Margin="0,10,0,0">
@@ -1237,9 +1237,9 @@
                                     </Button>
                                     <xctk:IntegerUpDown MinWidth="30" Height="30" Minimum="0" Maximum="60" Increment="1" Margin="8,0,0,0"
                                             Value="{Binding Rainbow,FallbackValue=5}" IsEnabled="{Binding RainbowExists}" />
-                                    <Label Content="secs/cycle" Padding="0" Margin="8,0,0,0" VerticalContentAlignment="Center" />
+                                    <Label Content="s/ciclo" Padding="0" Margin="8,0,0,0" VerticalContentAlignment="Center" />
                                     <StackPanel Margin="8,0,0,0" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding MaxSatRainbow,FallbackValue=100,StringFormat=Max Light {0:N2}%}" Margin="0,0,0,5" />
+                                        <TextBlock Text="{Binding MaxSatRainbow,FallbackValue=100,StringFormat=Brillo máx. {0:N0}%}" Margin="0,0,0,5" />
                                         <Slider Value="{Binding MaxSatRainbow,FallbackValue=100}" Minimum="0" Maximum="100" Width="100" IsEnabled="{Binding RainbowExists}" />
                                     </StackPanel>
                                 </StackPanel>
