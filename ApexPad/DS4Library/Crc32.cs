@@ -290,6 +290,7 @@ namespace DS4Windows
         /// <param name="start"></param>
         /// <param name="size"></param>
         /// <returns></returns>
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining | System.Runtime.CompilerServices.MethodImplOptions.AggressiveOptimization)]
         public static unsafe uint CalculateFasterBT78Hash(ref uint seed, ref byte[] buffer, ref int start, ref int size)
         {
             /*uint crc = seed;

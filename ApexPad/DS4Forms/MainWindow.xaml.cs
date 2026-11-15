@@ -1649,13 +1649,20 @@ Suspend support not enabled.", true);
                     Hide();
                     showAppInTaskbar = false;
                 }
+                // Pasar a software en segundo plano para liberar VRAM de la GPU
+                System.Windows.Media.RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
                 // Liberar memoria de trabajo no utilizada al pasar a segundo plano (<25 MB RAM)
                 Util.TrimWorkingSet();
             }
-            else if (WindowState == WindowState.Normal && !minToTask)
+            else
             {
-                Show();
-                showAppInTaskbar = true;
+                // Restaurar aceleracion GPU cuando la ventana vuelve a estar visible
+                System.Windows.Media.RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.Default;
+                if (WindowState == WindowState.Normal && !minToTask)
+                {
+                    Show();
+                    showAppInTaskbar = true;
+                }
             }
         }
 

@@ -1098,6 +1098,7 @@ namespace DS4Windows
             return (value < min) ? min : (value > max) ? max : value;
         }
 
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveOptimization)]
         public static DS4State SetCurveAndDeadzone(int device, DS4State cState, DS4State dState)
         {
             double rotation = /*tempDoubleArray[device] =*/  getLSRotation(device);

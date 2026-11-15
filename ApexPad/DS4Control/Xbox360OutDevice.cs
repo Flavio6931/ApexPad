@@ -76,6 +76,7 @@ namespace DS4Windows
             this._features = features;
         }
 
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveOptimization)]
         public override void ConvertandSendReport(DS4State state, int device)
         {
             if (!connected) return;
@@ -176,6 +177,7 @@ namespace DS4Windows
             cont.SubmitReport();
         }
 
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining | System.Runtime.CompilerServices.MethodImplOptions.AggressiveOptimization)]
         private short AxisScale(Int32 Value, Boolean Flip)
         {
             unchecked
