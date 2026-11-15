@@ -713,12 +713,42 @@ Suspend support not enabled.", true);
 
         private void TrayIconVM_RequestOpen(object sender, EventArgs e)
         {
-            if (!showAppInTaskbar)
+            BringToForeground();
+        }
+
+        /// <summary>
+        /// Muestra, restaura y fuerza la ventana principal al primer plano sobre otras ventanas.
+        /// </summary>
+        private void BringToForeground()
+        {
+            if (!IsVisible || !showAppInTaskbar)
             {
                 Show();
+                showAppInTaskbar = true;
             }
 
-            WindowState = WindowState.Normal;
+            if (WindowState == WindowState.Minimized)
+            {
+                WindowState = WindowState.Normal;
+            }
+
+            System.Windows.Media.RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.Default;
+
+            bool wasTopmost = Topmost;
+            Topmost = true;
+            Activate();
+            Topmost = wasTopmost;
+
+            IntPtr hwnd = new WindowInteropHelper(this).Handle;
+            Util.BringWindowToForeground(hwnd);
+            Focus();
+
+            // Reafirma el foco tras cerrarse el panel de iconos ocultos en Windows 10/11
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                Util.BringWindowToForeground(hwnd);
+                Activate();
+            }), System.Windows.Threading.DispatcherPriority.Input);
         }
 
         private void TrayIconVM_RequestShutdown(object sender, EventArgs e)
@@ -1658,10 +1688,20 @@ Suspend support not enabled.", true);
             {
                 // Restaurar aceleracion GPU cuando la ventana vuelve a estar visible
                 System.Windows.Media.RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.Default;
-                if (WindowState == WindowState.Normal && !minToTask)
+                if (WindowState == WindowState.Normal)
                 {
-                    Show();
-                    showAppInTaskbar = true;
+                    if (!minToTask)
+                    {
+                        Show();
+                        showAppInTaskbar = true;
+                    }
+
+                    if (IsLoaded)
+                    {
+                        IntPtr hwnd = new WindowInteropHelper(this).Handle;
+                        Util.BringWindowToForeground(hwnd);
+                        Activate();
+                    }
                 }
             }
         }
@@ -1771,14 +1811,14 @@ Suspend support not enabled.", true);
             }
         }
 
+        private void NotifyIcon_TrayLeftMouseUp(object sender, RoutedEventArgs e)
+        {
+            BringToForeground();
+        }
+
         private void NotifyIcon_TrayMouseDoubleClick(object sender, RoutedEventArgs e)
         {
-            if (!showAppInTaskbar)
-            {
-                Show();
-            }
-
-            WindowState = WindowState.Normal;
+            BringToForeground();
         }
 
         private void ProfilesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)

@@ -1,0 +1,24 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Generated icon">
+<g id="badge">
+<path id="Vector" d="M144 24H368C452 24 488 60 488 144V368C488 452 452 488 368 488H144C60 488 24 452 24 368V144C24 60 60 24 144 24Z" fill="#0B0F1A"/>
+</g>
+<g id="controller">
+<path id="Vector_2" d="M155 184H195L256 123L317 184H357C379 184 392 200 398 225L421 326C427 352 413 372 391 372C380 372 371 367 361 356L319 312H193L151 356C141 367 132 372 121 372C99 372 85 352 91 326L114 225C120 200 133 184 155 184Z" fill="#232D43" stroke="#35425B" stroke-width="8" stroke-linejoin="round"/>
+<path id="Vector_3" d="M145 212H207L256 163L305 212H367" stroke="url(#paint0_linear_0_1)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="direction-pad">
+<path id="Vector_4" d="M165 242H189V262H209V286H189V306H165V286H145V262H165V242Z" fill="#E6ECF6"/>
+</g>
+<g id="action-buttons">
+<path id="Vector_5" d="M348 272C355.732 272 362 265.732 362 258C362 250.268 355.732 244 348 244C340.268 244 334 250.268 334 258C334 265.732 340.268 272 348 272Z" fill="#E6ECF6"/>
+<path id="Vector_6" d="M319 301C326.732 301 333 294.732 333 287C333 279.268 326.732 273 319 273C311.268 273 305 279.268 305 287C305 294.732 311.268 301 319 301Z" fill="#E6ECF6"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_1" x1="143" y1="-6.59787e-06" x2="369" y2="-6.59787e-06" gradientUnits="userSpaceOnUse">
+<stop stop-color="#22D3EE"/>
+<stop offset="1" stop-color="#A855F7"/>
+</linearGradient>
+</defs>
+</svg>

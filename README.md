@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="doc/images/banner-hero.png" alt="ApexPad — mapeo y emulación de mandos de baja latencia para Windows" width="100%">
+</p>
+
 # ApexPad
 
 **ApexPad** es una suite avanzada de mapeo y emulación de mandos de baja latencia para Windows 10/11, desarrollada y optimizada por **Flavio Morales** ([Flavio6931](https://github.com/Flavio6931)).

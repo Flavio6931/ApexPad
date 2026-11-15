@@ -930,11 +930,11 @@ namespace DS4Windows
 
         public static Dictionary<TrayIconChoice, string> iconChoiceResources = new Dictionary<TrayIconChoice, string>
         {
-            [TrayIconChoice.Default] = $"{Global.RESOURCES_PREFIX}/DS4W.ico",
-            [TrayIconChoice.Colored] = $"{Global.RESOURCES_PREFIX}/DS4W.ico",
-            [TrayIconChoice.White] = $"{Global.RESOURCES_PREFIX}/DS4W - White.ico",
-            [TrayIconChoice.Black] = $"{Global.RESOURCES_PREFIX}/DS4W - Black.ico",
-            [TrayIconChoice.Battery] = $"{RESOURCES_PREFIX}/DS4W.ico"
+            [TrayIconChoice.Default] = $"{Global.RESOURCES_PREFIX}/ApexPadTray.ico",
+            [TrayIconChoice.Colored] = $"{Global.RESOURCES_PREFIX}/ApexPadTray.ico",
+            [TrayIconChoice.White] = $"{Global.RESOURCES_PREFIX}/ApexPadTray_White.ico",
+            [TrayIconChoice.Black] = $"{Global.RESOURCES_PREFIX}/ApexPadTray_Black.ico",
+            [TrayIconChoice.Battery] = $"{RESOURCES_PREFIX}/ApexPadTray.ico"
         };
 
         public static void SaveWhere(string path)

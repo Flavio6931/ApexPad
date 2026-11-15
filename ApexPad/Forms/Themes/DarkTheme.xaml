@@ -6,11 +6,11 @@
                     xmlns:themes1="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
 
     <!-- Brushes -->
-    <SolidColorBrush x:Key="BackgroundColor" Color="#FF202020" />
-    <SolidColorBrush x:Key="BorderColor" Color="#FF3F3F46" />
+    <SolidColorBrush x:Key="BackgroundColor" Color="#FF0E1422" />
+    <SolidColorBrush x:Key="BorderColor" Color="#FF26324A" />
     <SolidColorBrush x:Key="ForegroundColor" Color="White" />
-    <SolidColorBrush x:Key="SecondaryColor" Color="#FF2d5a8c" />
-    <SolidColorBrush x:Key="AccentColor" Color="#FF007ACC" />
+    <SolidColorBrush x:Key="SecondaryColor" Color="#FF1C3A5E" />
+    <SolidColorBrush x:Key="AccentColor" Color="#FF0891B2" />
 
     <system:String x:Key="KeyImageImg">key-solid_white.png</system:String>
     <system:String x:Key="CancelImg">cancel_white.png</system:String>
@@ -20,7 +20,7 @@
     <system:String x:Key="KeyUpImg">keyup_white.png</system:String>
     <system:String x:Key="KeyDownImg">keydown_white.png</system:String>
     <system:String x:Key="ClockImg">clock_white.png</system:String>
-    <system:String x:Key="DS4ConfigImg">DS4 Config_white.png</system:String>
+    <system:String x:Key="DS4ConfigImg">PadConfig_white.png</system:String>
 
     <system:String x:Key="CopyImg">copy_white.png</system:String>
     <system:String x:Key="DeleteImg">delete_white.png</system:String>

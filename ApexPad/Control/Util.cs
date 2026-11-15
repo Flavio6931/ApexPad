@@ -248,6 +248,74 @@ namespace DS4Windows
             catch { }
         }
 
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, IntPtr processId);
+
+        [DllImport("kernel32.dll")]
+        private static extern uint GetCurrentThreadId();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool IsIconic(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool BringWindowToTop(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        private const int SW_SHOW = 5;
+        private const int SW_RESTORE = 9;
+
+        /// <summary>
+        /// Restaura la ventana si esta minimizada y la lleva al primer plano sobre otras aplicaciones.
+        /// </summary>
+        /// <param name="handle">Handle HWND de la ventana.</param>
+        public static void BringWindowToForeground(IntPtr handle)
+        {
+            if (handle == IntPtr.Zero) return;
+
+            ShowWindow(handle, IsIconic(handle) ? SW_RESTORE : SW_SHOW);
+
+            IntPtr foregroundHwnd = GetForegroundWindow();
+            uint currentThreadId = GetCurrentThreadId();
+            uint foregroundThreadId = foregroundHwnd != IntPtr.Zero
+                ? GetWindowThreadProcessId(foregroundHwnd, IntPtr.Zero)
+                : 0;
+
+            bool attached = false;
+            if (foregroundThreadId != 0 && foregroundThreadId != currentThreadId)
+            {
+                attached = AttachThreadInput(foregroundThreadId, currentThreadId, true);
+            }
+
+            try
+            {
+                BringWindowToTop(handle);
+                SetForegroundWindow(handle);
+            }
+            finally
+            {
+                if (attached)
+                {
+                    AttachThreadInput(foregroundThreadId, currentThreadId, false);
+                }
+            }
+        }
+
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern bool EnumDisplayDevicesW(string lpDevice, uint iDevNum, ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
 

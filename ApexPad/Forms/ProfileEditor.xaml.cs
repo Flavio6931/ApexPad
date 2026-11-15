@@ -590,122 +590,122 @@ namespace DS4WinWPF.DS4Forms
 
             ImageSource temp =
                 sourceConverter.ConvertFromString(
-                    $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_Cross.png") as ImageSource;
+                    $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_Cross.png") as ImageSource;
             ImageBrush crossHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_Circle.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_Circle.png") as ImageSource;
             ImageBrush circleHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_Square.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_Square.png") as ImageSource;
             ImageBrush squareHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_Triangle.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_Triangle.png") as ImageSource;
             ImageBrush triangleHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_L1.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_L1.png") as ImageSource;
             ImageBrush l1Hover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_R1.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_R1.png") as ImageSource;
             ImageBrush r1Hover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_L2.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_L2.png") as ImageSource;
             ImageBrush l2Hover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_R2.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_R2.png") as ImageSource;
             ImageBrush r2Hover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_Share.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_Share.png") as ImageSource;
             ImageBrush shareHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_options.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_options.png") as ImageSource;
             ImageBrush optionsHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_PS.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_PS.png") as ImageSource;
             ImageBrush guideHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_TouchLeft.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_TouchLeft.png") as ImageSource;
             ImageBrush leftTouchHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_TouchMulti.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_TouchMulti.png") as ImageSource;
             ImageBrush multiTouchTouchHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_TouchRight.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_TouchRight.png") as ImageSource;
             ImageBrush rightTouchHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_TouchUpper.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_TouchUpper.png") as ImageSource;
             ImageBrush topTouchHover = new ImageBrush(temp);
 
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_LS.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_LS.png") as ImageSource;
             ImageBrush l3Hover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_LS.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_LS.png") as ImageSource;
             ImageBrush lsuHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_LS.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_LS.png") as ImageSource;
             ImageBrush lsrHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_LS.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_LS.png") as ImageSource;
             ImageBrush lsdHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_LS.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_LS.png") as ImageSource;
             ImageBrush lslHover = new ImageBrush(temp);
 
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_RS.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_RS.png") as ImageSource;
             ImageBrush r3Hover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_RS.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_RS.png") as ImageSource;
             ImageBrush rsuHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_RS.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_RS.png") as ImageSource;
             ImageBrush rsrHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_RS.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_RS.png") as ImageSource;
             ImageBrush rsdHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_RS.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_RS.png") as ImageSource;
             ImageBrush rslHover = new ImageBrush(temp);
 
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_Up.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_Up.png") as ImageSource;
             ImageBrush upHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_Right.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_Right.png") as ImageSource;
             ImageBrush rightHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_Down.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_Down.png") as ImageSource;
             ImageBrush downHover = new ImageBrush(temp);
 
             temp = sourceConverter.ConvertFromString(
-                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/DS4-Config_Left.png") as ImageSource;
+                $"{Global.ASSEMBLY_RESOURCE_PREFIX}component/Resources/PadConfig_Left.png") as ImageSource;
             ImageBrush leftHover = new ImageBrush(temp);
 
             hoverImages[crossConBtn] = crossHover;
@@ -1914,9 +1914,9 @@ namespace DS4WinWPF.DS4Forms
     public class ResourcePaths
     {
         public string SizePNG { get => $"{Global.RESOURCES_PREFIX}/size.png"; }
-        public string DS4ConfigPNG { get => $"{Global.RESOURCES_PREFIX}/DS4 Config.png"; }
-        public string DS4LightbarPNG { get => $"{Global.RESOURCES_PREFIX}/DS4 lightbar.png"; }
-        public string DS4ConfigRSPNG { get => $"{Global.RESOURCES_PREFIX}/DS4-Config_RS.png"; }
+        public string DS4ConfigPNG { get => $"{Global.RESOURCES_PREFIX}/PadConfig.png"; }
+        public string DS4LightbarPNG { get => $"{Global.RESOURCES_PREFIX}/PadLightbar.png"; }
+        public string DS4ConfigRSPNG { get => $"{Global.RESOURCES_PREFIX}/PadConfig_RS.png"; }
         public string RainbowPNG { get => $"{Global.RESOURCES_PREFIX}/rainbow.png"; }
     }
 
