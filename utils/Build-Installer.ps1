@@ -100,6 +100,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
@@ -228,8 +229,9 @@ namespace ApexPadSetup
 
             chkStartMenu = new CheckBox
             {
-                Text = "Crear acceso directo en el Menu Inicio",
+                Text = "Registrar en Menu Inicio y Busqueda de Windows (obligatorio)",
                 Checked = true,
+                Enabled = false,
                 Location = new Point(24, 186),
                 Size = new Size(480, 24),
                 ForeColor = Color.FromArgb(244, 244, 245)
@@ -357,15 +359,15 @@ namespace ApexPadSetup
             chkLaunch.Enabled = false;
 
             bool createDesktop = chkDesktop.Checked;
-            bool createStartMenu = chkStartMenu.Checked;
             bool copyProfiles = chkDefaultProfiles.Checked;
             bool launchAfter = chkLaunch.Checked;
 
             var worker = new Thread(delegate()
             {
-                RunInstall(targetDir, createDesktop, createStartMenu, copyProfiles, launchAfter);
+                RunInstall(targetDir, createDesktop, copyProfiles, launchAfter);
             });
             worker.IsBackground = true;
+            worker.SetApartmentState(ApartmentState.STA);
             worker.Start();
         }
 
@@ -382,7 +384,7 @@ namespace ApexPadSetup
             lblStatus.Text = message;
         }
 
-        private void RunInstall(string targetDir, bool createDesktop, bool createStartMenu, bool copyProfiles, bool launchAfter)
+        private void RunInstall(string targetDir, bool createDesktop, bool copyProfiles, bool launchAfter)
         {
             try
             {
@@ -401,7 +403,7 @@ namespace ApexPadSetup
                     SeedAppDataProfiles(targetDir);
                 }
 
-                UpdateProgress(90, "Creando accesos directos y registro de desinstalacion...");
+                UpdateProgress(90, "Registrando en Menu Inicio y Busqueda de Windows...");
                 if (createDesktop)
                 {
                     string desktopLnk = Path.Combine(
@@ -410,21 +412,26 @@ namespace ApexPadSetup
                     CreateShortcut(desktopLnk, exePath, targetDir, "ApexPad - Emulador de mandos de baja latencia");
                 }
 
-                if (createStartMenu)
-                {
-                    string startFolder = Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.Programs),
-                        "ApexPad");
-                    Directory.CreateDirectory(startFolder);
-                    CreateShortcut(
-                        Path.Combine(startFolder, "ApexPad.lnk"),
-                        exePath,
-                        targetDir,
-                        "ApexPad - Emulador de mandos de baja latencia");
-                }
+                // Registro obligatorio en raiz del Menu Inicio y subcarpeta para indexado inmediato en Windows Search.
+                string programsDir = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
+                CreateShortcut(
+                    Path.Combine(programsDir, "ApexPad.lnk"),
+                    exePath,
+                    targetDir,
+                    "ApexPad - Emulador de mandos de baja latencia");
+
+                string startFolder = Path.Combine(programsDir, "ApexPad");
+                Directory.CreateDirectory(startFolder);
+                CreateShortcut(
+                    Path.Combine(startFolder, "ApexPad.lnk"),
+                    exePath,
+                    targetDir,
+                    "ApexPad - Emulador de mandos de baja latencia");
 
                 string uninstallScript = WriteUninstallerScript(targetDir);
                 RegisterUninstallEntry(targetDir, exePath, uninstallScript);
+                RegisterAppPaths(targetDir, exePath);
+                SHChangeNotify(0x08000000, 0x0000, IntPtr.Zero, IntPtr.Zero);
 
                 UpdateProgress(100, "Instalacion completada correctamente.");
 
@@ -462,7 +469,6 @@ namespace ApexPadSetup
                     btnCancel.Enabled = true;
                     txtPath.Enabled = true;
                     chkDesktop.Enabled = true;
-                    chkStartMenu.Enabled = true;
                     chkDefaultProfiles.Enabled = true;
                     chkLaunch.Enabled = true;
                     lblStatus.Text = "Error durante la instalacion.";
@@ -585,15 +591,23 @@ namespace ApexPadSetup
             }
         }
 
+        [DllImport("shell32.dll")]
+        private static extern void SHChangeNotify(int wEventId, uint uFlags, IntPtr dwItem1, IntPtr dwItem2);
+
         private static void CreateShortcut(string shortcutPath, string targetExe, string workingDir, string description)
         {
             Type shellType = Type.GetTypeFromProgID("WScript.Shell");
+            if (shellType == null)
+            {
+                shellType = Type.GetTypeFromCLSID(new Guid("72C24DD5-D70A-438B-8A42-98424B88AFB8"));
+            }
             if (shellType == null) return;
 
             object shell = Activator.CreateInstance(shellType);
+            object shortcut = null;
             try
             {
-                object shortcut = shellType.InvokeMember(
+                shortcut = shellType.InvokeMember(
                     "CreateShortcut",
                     BindingFlags.InvokeMethod,
                     null,
@@ -609,7 +623,8 @@ namespace ApexPadSetup
             }
             finally
             {
-                System.Runtime.InteropServices.Marshal.FinalReleaseComObject(shell);
+                if (shortcut != null) Marshal.FinalReleaseComObject(shortcut);
+                Marshal.FinalReleaseComObject(shell);
             }
         }
 
@@ -627,11 +642,15 @@ $resp = [System.Windows.Forms.MessageBox]::Show(
 if ($resp -ne [System.Windows.Forms.DialogResult]::Yes) { exit 0 }
 Get-Process -Name 'ApexPad' -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
 Start-Sleep -Milliseconds 300
+$programsDir = [Environment]::GetFolderPath('Programs')
 $desktopLnk = Join-Path ([Environment]::GetFolderPath('DesktopDirectory')) 'ApexPad.lnk'
-$startFolder = Join-Path ([Environment]::GetFolderPath('Programs')) 'ApexPad'
+$startRootLnk = Join-Path $programsDir 'ApexPad.lnk'
+$startFolder = Join-Path $programsDir 'ApexPad'
 Remove-Item -Path $desktopLnk -Force -ErrorAction SilentlyContinue
+Remove-Item -Path $startRootLnk -Force -ErrorAction SilentlyContinue
 Remove-Item -Path $startFolder -Recurse -Force -ErrorAction SilentlyContinue
 Remove-Item -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\ApexPad' -Force -ErrorAction SilentlyContinue
+Remove-Item -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\App Paths\ApexPad.exe' -Force -ErrorAction SilentlyContinue
 $dir = Split-Path -Parent $MyInvocation.MyCommand.Path
 Start-Process -FilePath 'cmd.exe' -ArgumentList ""/c timeout /t 2 /nobreak >nul & rmdir /s /q `""$dir`"""" -WindowStyle Hidden
 ";
@@ -654,6 +673,16 @@ Start-Process -FilePath 'cmd.exe' -ArgumentList ""/c timeout /t 2 /nobreak >nul 
                 key.SetValue("NoRepair", 1, RegistryValueKind.DWord);
                 key.SetValue("UninstallString",
                     string.Format("powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"{0}\"", uninstallScript));
+            }
+        }
+
+        private static void RegisterAppPaths(string targetDir, string exePath)
+        {
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\App Paths\ApexPad.exe"))
+            {
+                if (key == null) return;
+                key.SetValue(string.Empty, exePath);
+                key.SetValue("Path", targetDir);
             }
         }
     }
