@@ -28,7 +28,7 @@ namespace DS4WinWPF
     public static class StartupMethods
     {
         public static string lnkpath = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\ApexPad.lnk";
-        private static string taskBatPath = Path.Combine(DS4Windows.Global.exedirpath, "task.bat");
+        private static string taskExePath = DS4Windows.Global.exelocation;
 
         public static bool HasStartProgEntry()
         {
@@ -95,7 +95,7 @@ namespace DS4WinWPF
                     if (act.ActionType == TaskActionType.Execute)
                     {
                         ExecAction temp = act as ExecAction;
-                        if (temp.Path != taskBatPath)
+                        if (!string.Equals(temp?.Path, taskExePath, StringComparison.OrdinalIgnoreCase))
                         {
                             ts.RootFolder.DeleteTask("RunApexPad");
                             break;
@@ -120,22 +120,27 @@ namespace DS4WinWPF
         {
             DeleteTaskEntry();
 
-            // Create new version of task.bat file using current exe
-            // filename. Allow dynamic file
-            RefreshTaskBat();
-
-            TaskService ts = new TaskService();
-            TaskDefinition td = ts.NewTask();
-            td.Triggers.Add(new LogonTrigger());
             string dir = DS4Windows.Global.exedirpath;
-            td.Actions.Add(new ExecAction($@"{dir}\task.bat",
-                "",
-                dir));
+            string exePath = Path.Combine(dir, DS4Windows.Global.exeFileName);
 
-            td.Principal.RunLevel = TaskRunLevel.Highest;
-            td.Settings.StopIfGoingOnBatteries = false;
-            td.Settings.DisallowStartIfOnBatteries = false;
-            ts.RootFolder.RegisterTaskDefinition("RunApexPad", td);
+            using (TaskService ts = new TaskService())
+            {
+                TaskDefinition td = ts.NewTask();
+                td.Triggers.Add(new LogonTrigger());
+                td.Actions.Add(new ExecAction(exePath, "-m", dir));
+
+                // No elevar automaticamente tareas ubicadas en rutas escribibles por el usuario
+                string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                string userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                bool isUserWritable =
+                    (!string.IsNullOrEmpty(localAppData) && dir.StartsWith(localAppData, StringComparison.OrdinalIgnoreCase)) ||
+                    (!string.IsNullOrEmpty(userProfile) && dir.StartsWith(userProfile, StringComparison.OrdinalIgnoreCase));
+
+                td.Principal.RunLevel = isUserWritable ? TaskRunLevel.LUA : TaskRunLevel.Highest;
+                td.Settings.StopIfGoingOnBatteries = false;
+                td.Settings.DisallowStartIfOnBatteries = false;
+                ts.RootFolder.RegisterTaskDefinition("RunApexPad", td);
+            }
         }
 
         public static void DeleteTaskEntry()
@@ -187,22 +192,6 @@ namespace DS4WinWPF
             }
 
             return result;
-        }
-
-        private static void RefreshTaskBat()
-        {
-            string dir = DS4Windows.Global.exedirpath;
-            string path = $@"{dir}\task.bat";
-            FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write);
-            using (StreamWriter w = new StreamWriter(fileStream))
-            {
-                string temp = string.Empty;
-                w.WriteLine("@echo off"); // Turn off echo
-                w.WriteLine("SET mypath=\"%~dp0\"");
-                temp = $"cmd.exe /c start \"RunApexPad\" %mypath%\\{DS4Windows.Global.exeFileName} -m";
-                w.WriteLine(temp);
-                w.WriteLine("exit");
-            }
         }
     }
 }

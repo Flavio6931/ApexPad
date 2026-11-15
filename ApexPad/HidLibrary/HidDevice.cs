@@ -190,17 +190,29 @@ namespace DS4Windows
         public unsafe ReadStatus ReadFile(Span<byte> inputBuffer, uint timeout = uint.MaxValue)
         {
             SafeReadHandle ??= OpenHandle(_devicePath, true, false);
+            if (SafeReadHandle == null || SafeReadHandle.IsInvalid || SafeReadHandle.IsClosed)
+                return ReadStatus.ReadError;
 
             _readWaitEvent.Reset();
             var ov = new NativeOverlapped { EventHandle = _readWaitEvent.SafeWaitHandle.DangerousGetHandle() };
 
-            if (PInvoke.ReadFile(SafeReadHandle, inputBuffer, null, &ov))
-                return ReadStatus.Success;
+            fixed (byte* ptr = inputBuffer)
+            {
+                if (PInvoke.ReadFile(SafeReadHandle, inputBuffer, null, &ov))
+                    return ReadStatus.Success;
 
-            if (Marshal.GetLastWin32Error() != (uint)WIN32_ERROR.ERROR_IO_PENDING) return ReadStatus.ReadError;
+                if (Marshal.GetLastWin32Error() != (uint)WIN32_ERROR.ERROR_IO_PENDING) return ReadStatus.ReadError;
 
-            if (!PInvoke.GetOverlappedResultEx(SafeReadHandle, ov, out _, timeout, true))
-                return ReadStatus.ReadError;
+                if (!PInvoke.GetOverlappedResultEx(SafeReadHandle, ov, out _, timeout, true))
+                {
+                    // Cancelar I/O pendiente antes de que NativeOverlapped salga del stack
+                    if (NativeMethods.CancelIoEx(SafeReadHandle.DangerousGetHandle(), (IntPtr)(&ov)))
+                    {
+                        PInvoke.GetOverlappedResult(SafeReadHandle, ov, out _, true);
+                    }
+                    return ReadStatus.ReadError;
+                }
+            }
 
             return ReadStatus.Success;
         }
@@ -218,6 +230,9 @@ namespace DS4Windows
         public unsafe bool WriteOutputReportViaInterrupt(byte[] outputBuffer, int timeout)
         {
             SafeReadHandle ??= OpenHandle(_devicePath, true, false);
+            if (SafeReadHandle == null || SafeReadHandle.IsInvalid || SafeReadHandle.IsClosed)
+                return false;
+
             _writeWaitEvent.Reset();
             var ov = new NativeOverlapped { EventHandle = _writeWaitEvent.SafeWaitHandle.DangerousGetHandle() };
 
@@ -254,6 +269,10 @@ namespace DS4Windows
 
         public bool readFeatureData(byte[] inputBuffer)
         {
+            if (inputBuffer == null || inputBuffer.Length == 0 ||
+                SafeReadHandle == null || SafeReadHandle.IsInvalid || SafeReadHandle.IsClosed)
+                return false;
+
             return NativeMethods.HidD_GetFeature(SafeReadHandle.DangerousGetHandle(), inputBuffer, inputBuffer.Length);
         }
 

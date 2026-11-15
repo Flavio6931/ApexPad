@@ -370,6 +370,61 @@ namespace DS4Windows
         }
 
         /// <summary>
+        /// Valida si una cadena es una URL HTTP/HTTPS segura y bien formada.
+        /// </summary>
+        public static bool IsAllowedWebUri(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path) || path.IndexOfAny(new[] { '\r', '\n', '"' }) >= 0)
+            {
+                return false;
+            }
+
+            return Uri.TryCreate(path, UriKind.Absolute, out Uri uri) &&
+                   (uri.Scheme == Uri.UriSchemeHttps || uri.Scheme == Uri.UriSchemeHttp) &&
+                   !string.IsNullOrWhiteSpace(uri.Host);
+        }
+
+        /// <summary>
+        /// Valida si un destino de proceso/shell es seguro (URL web o directorio/archivo local no ejecutable).
+        /// </summary>
+        public static bool IsAllowedShellTarget(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path) || path.IndexOfAny(new[] { '\r', '\n', '"' }) >= 0)
+            {
+                return false;
+            }
+
+            if (IsAllowedWebUri(path))
+            {
+                return true;
+            }
+
+            if (path.StartsWith("file:", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            if (Path.IsPathRooted(path) && !path.StartsWith(@"\\", StringComparison.Ordinal))
+            {
+                if (Directory.Exists(path))
+                {
+                    return true;
+                }
+
+                if (File.Exists(path))
+                {
+                    string ext = Path.GetExtension(path);
+                    return ext.Equals(".txt", StringComparison.OrdinalIgnoreCase) ||
+                           ext.Equals(".log", StringComparison.OrdinalIgnoreCase) ||
+                           ext.Equals(".xml", StringComparison.OrdinalIgnoreCase) ||
+                           ext.Equals(".md", StringComparison.OrdinalIgnoreCase);
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Use admin check to determine if process can be launched normally (normal user)
         /// or launched through Windows Explorer to de-elevate a process
         /// </summary>
@@ -377,11 +432,18 @@ namespace DS4Windows
         /// <param name="argument">Extra arguments to pass to the launching program</param>
         public static void StartProcessHelper(string path, string arguments = null)
         {
+            if (!IsAllowedShellTarget(path))
+            {
+                return;
+            }
+
             if (!Global.IsAdministrator())
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo(path);
                 startInfo.UseShellExecute = true;
-                if (!string.IsNullOrEmpty(arguments))
+                if (!string.IsNullOrEmpty(arguments) &&
+                    arguments.IndexOfAny(new[] { '\r', '\n', '"' }) < 0 &&
+                    !IsAllowedWebUri(path))
                 {
                     startInfo.Arguments = arguments;
                 }
@@ -408,21 +470,26 @@ namespace DS4Windows
         /// <param name="argument">Extra arguments to pass to the launching program</param>
         public static void StartProcessInExplorer(string path, string arguments = null)
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = "explorer.exe";
-            // Need to place Path/URL in double quotes to allow equals sign to not be
-            // interpreted as a delimiter
-            if (string.IsNullOrEmpty(arguments))
+            if (!IsAllowedShellTarget(path))
             {
-                startInfo.Arguments = $"\"{path}\"";
+                return;
             }
-            else
+
+            string explorerExe = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.Windows),
+                "explorer.exe");
+
+            ProcessStartInfo startInfo = new ProcessStartInfo(explorerExe);
+            startInfo.ArgumentList.Add(path);
+            if (!string.IsNullOrEmpty(arguments) &&
+                arguments.IndexOfAny(new[] { '\r', '\n', '"' }) < 0 &&
+                !IsAllowedWebUri(path))
             {
-                startInfo.Arguments = $"\"{path}\" \"{arguments}\"";
+                startInfo.ArgumentList.Add(arguments);
             }
 
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.UseShellExecute = true;
+            startInfo.UseShellExecute = false;
             try
             {
                 using (Process temp = Process.Start(startInfo)) { }
@@ -439,48 +506,6 @@ namespace DS4Windows
                     AppLogger.LogToGui(t.Exception.ToString(), true);
                 }
             });
-        }
-
-        public static int ElevatedCopyUpdater(string tmpUpdaterPath, bool deleteUpdatesDir=false)
-        {
-            int result = -1;
-            string tmpPath = Path.Combine(Path.GetTempPath(), "updatercopy.bat");
-            //string tmpPath = Path.GetTempFileName();
-            // Create temporary bat script that will later be executed
-            using (StreamWriter w = new StreamWriter(new FileStream(tmpPath,
-                FileMode.Create, FileAccess.Write)))
-            {
-                w.WriteLine("@echo off"); // Turn off echo
-                w.WriteLine("@echo Attempting to replace updater, please wait...");
-                // Move temp downloaded file to destination
-                w.WriteLine($"@mov /Y \"{tmpUpdaterPath}\" \"{Global.exedirpath}\\DS4Updater.exe\"");
-                if (deleteUpdatesDir)
-                {
-                    w.WriteLine($"@del /S \"{Global.exedirpath}\\Update Files\\DS4Windows\"");
-                }
-
-                w.Close();
-            }
-
-            // Execute temp batch script with admin privileges
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = tmpPath;
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.Verb = "runas";
-            startInfo.UseShellExecute = true;
-            startInfo.CreateNoWindow = true;
-            try
-            {
-                // Launch process, wait and then save exit code
-                using (Process temp = Process.Start(startInfo))
-                {
-                    temp.WaitForExit();
-                    result = temp.ExitCode;
-                }
-            }
-            catch { }
-
-            return result;
         }
 
         public static string GetOSProductName()

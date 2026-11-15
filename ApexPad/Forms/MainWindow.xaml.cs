@@ -276,12 +276,7 @@ namespace DS4WinWPF.DS4Forms
                 {
                     Dispatcher.Invoke(() =>
                     {
-                        MessageBox.Show(Properties.Resources.PleaseDownloadUpdater);
-                        if (!string.IsNullOrEmpty(newUpdaterVersion))
-                        {
-                            Util.StartProcessHelper(
-                                $"https://github.com/schmaldeo/DS4Updater/releases/tag/v{newUpdaterVersion}/{mainWinVM.updaterExe}");
-                        }
+                        Util.StartProcessHelper("https://github.com/Flavio6931/ApexPad/releases");
                     });
                 }
             }
@@ -339,11 +334,7 @@ namespace DS4WinWPF.DS4Forms
                     {
                         Dispatcher.Invoke(() =>
                         {
-                            MessageBox.Show(Properties.Resources.PleaseDownloadUpdater);
-                            if (!string.IsNullOrEmpty(newUpdaterVersion))
-                            {
-                                Util.StartProcessHelper($"https://github.com/schmaldeo/DS4Updater/releases/tag/v{newUpdaterVersion}/{mainWinVM.updaterExe}");
-                            }
+                            Util.StartProcessHelper("https://github.com/Flavio6931/ApexPad/releases");
                         });
                     }
                 }
@@ -1245,7 +1236,8 @@ Suspend support not enabled.", true);
                                     if (int.TryParse(strData[1], out tdevice)) tdevice--;
 
                                     if (tdevice >= 0 && tdevice < ControlService.MAX_DS4_CONTROLLER_COUNT &&
-                                            File.Exists(Global.appdatapath + "\\Profiles\\" + strData[2] + ".xml"))
+                                            Global.TryResolveSafeProfilePath(strData[2], out string safeProfilePath) &&
+                                            File.Exists(safeProfilePath))
                                     {
                                         if (strData[0] == "loadprofile")
                                         {

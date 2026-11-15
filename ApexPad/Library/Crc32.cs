@@ -299,6 +299,13 @@ namespace DS4Windows
             return crc;
             */
 
+            if (buffer == null)
+                throw new ArgumentNullException(nameof(buffer));
+            if (start < 0 || size < 0 || start > buffer.Length - size)
+                throw new ArgumentOutOfRangeException(nameof(size));
+            if (size != 74)
+                return CalculateBasicHash(ref seed, ref buffer, start, size);
+
             uint crc = seed;
             int i = start;
             int bufsize = size;

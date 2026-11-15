@@ -4058,46 +4058,63 @@ namespace DS4Windows
                                 if (!actionDone[index].dev[device])
                                 {
                                     actionDone[index].dev[device] = true;
-                                    if (!string.IsNullOrEmpty(action.extra))
+                                    if (string.IsNullOrWhiteSpace(action.details) ||
+                                        action.details.IndexOfAny(new[] { '\r', '\n', '"', '&', '|', ';', '<', '>' }) >= 0 ||
+                                        !File.Exists(action.details))
+                                    {
+                                        // Omitir rutas inexistentes o con metacaracteres de shell
+                                    }
+                                    else if (!string.IsNullOrEmpty(action.extra))
                                     {
                                         int pos = action.extra.IndexOf("$hidden", StringComparison.OrdinalIgnoreCase);
                                         if (pos >= 0)
                                         {
-                                            System.Diagnostics.Process specActionLaunchProc = new System.Diagnostics.Process();
-
                                             // LaunchProgram specAction has $hidden argument to indicate that the child process window should be hidden (especially useful when launching .bat/.cmd batch files).
                                             // Removes the first occurence of $hidden substring from extra argument because it was a special action modifier keyword
-                                            string cmdArgs = specActionLaunchProc.StartInfo.Arguments = action.extra.Remove(pos, 7);
-                                            string cmdExt = Path.GetExtension(action.details).ToLower();
+                                            string cmdArgs = action.extra.Remove(pos, 7);
+                                            string cmdExt = Path.GetExtension(action.details);
 
-                                            if (cmdExt == ".bat" || cmdExt == ".cmd")
+                                            using System.Diagnostics.Process specActionLaunchProc = new System.Diagnostics.Process();
+                                            specActionLaunchProc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                                            specActionLaunchProc.StartInfo.CreateNoWindow = true;
+                                            specActionLaunchProc.StartInfo.WorkingDirectory = Path.GetDirectoryName(action.details);
+
+                                            if (cmdExt.Equals(".bat", StringComparison.OrdinalIgnoreCase) ||
+                                                cmdExt.Equals(".cmd", StringComparison.OrdinalIgnoreCase))
                                             {
-                                                // Launch batch script using the default command shell cmd (COMSPEC env variable)
-                                                specActionLaunchProc.StartInfo.FileName = System.Environment.GetEnvironmentVariable("COMSPEC");
-                                                specActionLaunchProc.StartInfo.Arguments = "/C \"" + action.details + "\" " + cmdArgs;
+                                                if (cmdArgs.IndexOfAny(new[] { '\r', '\n', '&', '|', ';', '<', '>', '`', '$' }) >= 0)
+                                                {
+                                                    cmdArgs = string.Empty;
+                                                }
+
+                                                string cmdExe = Path.Combine(Environment.SystemDirectory, "cmd.exe");
+                                                specActionLaunchProc.StartInfo.FileName = cmdExe;
+                                                specActionLaunchProc.StartInfo.Arguments = string.IsNullOrWhiteSpace(cmdArgs)
+                                                    ? $"/C \"{action.details}\""
+                                                    : $"/C \"{action.details}\" {cmdArgs}";
+                                                specActionLaunchProc.StartInfo.UseShellExecute = false;
                                             }
                                             else
                                             {
                                                 // Normal EXE executable app (action.details) with optional cmdline arguments (action.extra)
                                                 specActionLaunchProc.StartInfo.FileName = action.details;
                                                 specActionLaunchProc.StartInfo.Arguments = cmdArgs;
+                                                specActionLaunchProc.StartInfo.UseShellExecute = false;
                                             }
 
-                                            // Launch child process using hidden wnd option (the child process should probably do something and then close itself unless you want it to remain hidden in background)
-                                            specActionLaunchProc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                                            specActionLaunchProc.StartInfo.CreateNoWindow = true;
-                                            specActionLaunchProc.StartInfo.UseShellExecute = true;
-                                            specActionLaunchProc.Start();
+                                            try { specActionLaunchProc.Start(); }
+                                            catch { }
                                         }
                                         else
                                         {
-                                            // No special process modifiers (ie. $hidden wnd keyword). Launch the child process using the default WinOS settings
                                             using (Process temp = new Process())
                                             {
                                                 temp.StartInfo.FileName = action.details;
                                                 temp.StartInfo.Arguments = action.extra;
-                                                temp.StartInfo.UseShellExecute = true;
-                                                temp.Start();
+                                                temp.StartInfo.WorkingDirectory = Path.GetDirectoryName(action.details);
+                                                temp.StartInfo.UseShellExecute = false;
+                                                try { temp.Start(); }
+                                                catch { }
                                             }
                                         }
                                     }
@@ -4106,8 +4123,10 @@ namespace DS4Windows
                                         using (Process temp = new Process())
                                         {
                                             temp.StartInfo.FileName = action.details;
-                                            temp.StartInfo.UseShellExecute = true;
-                                            temp.Start();
+                                            temp.StartInfo.WorkingDirectory = Path.GetDirectoryName(action.details);
+                                            temp.StartInfo.UseShellExecute = false;
+                                            try { temp.Start(); }
+                                            catch { }
                                         }
                                     }
                                 }

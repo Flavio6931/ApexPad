@@ -49,11 +49,7 @@ namespace DS4WinWPF.DS4Forms
                 NavigationCommands.GoToPage,
                 (sender, e) =>
                 {
-                    Process proc = new Process();
-                    proc.StartInfo.UseShellExecute = true;
-                    proc.StartInfo.FileName = (string)e.Parameter;
-
-                    proc.Start();
+                    DS4Windows.Util.StartProcessHelper(e.Parameter?.ToString());
                 }));
 
             richMessageBox.Document = tmpDoc;

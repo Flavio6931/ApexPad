@@ -74,11 +74,7 @@ namespace DS4WinWPF.DS4Forms
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = e.Uri.AbsoluteUri,
-                UseShellExecute = true
-            });
+            Util.StartProcessHelper(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
 

@@ -347,3 +347,11 @@ out/
 *.tar.gz
 Installer/
 installer/
+
+# Secrets & Environment files
+.env
+.env.*
+secrets.*
+credentials.*
+*.key
+*.pem

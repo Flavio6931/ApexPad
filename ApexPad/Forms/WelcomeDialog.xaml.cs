@@ -55,9 +55,38 @@ namespace DS4WinWPF.DS4Forms
         // Default to latest known ViGEmBus installer
         private string installDL = InstallerDLX64;
         private string installFileName;
+        private string downloadTempDir;
 
         Process monitorProc;
         NonFormTimer monitorTimer;
+
+        /// <summary>
+        /// Crea un subdirectorio temporal aislado por sesion para descargas de instaladores.
+        /// </summary>
+        private string GetSafeDownloadDir()
+        {
+            if (string.IsNullOrEmpty(downloadTempDir) || !Directory.Exists(downloadTempDir))
+            {
+                downloadTempDir = Path.Combine(Path.GetTempPath(), $"ApexPad_{Guid.NewGuid():N}");
+                Directory.CreateDirectory(downloadTempDir);
+            }
+
+            return downloadTempDir;
+        }
+
+        private static void TryDeleteFileQuietly(string path)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(path) && File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
 
         public WelcomeDialog(bool loadConfig = false)
         {
@@ -107,7 +136,7 @@ namespace DS4WinWPF.DS4Forms
                 step5FakerInputPanel.IsEnabled = false;
             }
 
-            tempInstFileName = Path.Combine(Path.GetTempPath(), $"{installFileName}.tmp");
+            tempInstFileName = Path.Combine(GetSafeDownloadDir(), $"{installFileName}.tmp");
 
             // HidHide requires Windows 10 (or later) x64
             if (!IsHidHideControlCompatible())
@@ -140,16 +169,10 @@ namespace DS4WinWPF.DS4Forms
 
         private void VigemInstallBtn_Click(object sender, RoutedEventArgs e)
         {
-            string tempFilePath = Path.Combine(Path.GetTempPath(), $"{installFileName}");
-            if (File.Exists(tempFilePath))
-            {
-                File.Delete(tempFilePath);
-            }
-
-            if (File.Exists(tempInstFileName))
-            {
-                File.Delete(tempInstFileName);
-            }
+            string downloadDir = GetSafeDownloadDir();
+            string tempFilePath = Path.Combine(downloadDir, $"{installFileName}");
+            TryDeleteFileQuietly(tempFilePath);
+            TryDeleteFileQuietly(tempInstFileName);
 
             EnableControls(false);
             ViGEmDownloadLaunch();
@@ -174,7 +197,7 @@ namespace DS4WinWPF.DS4Forms
                 //Console.WriteLine(x.PercentComplete.ToString("P"));
             });
 
-            string finalFilename = Path.Combine(Path.GetTempPath(), $"{installFileName}");
+            string finalFilename = Path.Combine(GetSafeDownloadDir(), $"{installFileName}");
             bool success = false;
             using (var downloadStream = new FileStream(tempInstFileName, FileMode.CreateNew))
             {
@@ -185,7 +208,7 @@ namespace DS4WinWPF.DS4Forms
 
             if (success)
             {
-                File.Move(tempInstFileName, finalFilename);
+                File.Move(tempInstFileName, finalFilename, overwrite: true);
             }
             success = false; // Reset for later check
 
@@ -239,8 +262,8 @@ namespace DS4WinWPF.DS4Forms
                     }), null);
                 }
 
-                string currentFilePath = Path.Combine(Path.GetTempPath(), $"{installFileName}");
-                File.Delete(currentFilePath);
+                string currentFilePath = Path.Combine(GetSafeDownloadDir(), $"{installFileName}");
+                TryDeleteFileQuietly(currentFilePath);
                 ((NonFormTimer)sender).Stop();
                 finished = true;
             }
@@ -253,27 +276,23 @@ namespace DS4WinWPF.DS4Forms
 
         private void Step2Btn_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("http://www.microsoft.com/accessories/en-gb/d/xbox-360-controller-for-windows");
+            DS4Windows.Util.StartProcessHelper("https://support.xbox.com/");
         }
 
         private void BluetoothSetLink_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("control", "bthprops.cpl");
+            string controlExe = Path.Combine(Environment.SystemDirectory, "control.exe");
+            Process.Start(new ProcessStartInfo(controlExe, "bthprops.cpl") { UseShellExecute = false });
         }
 
         private void HidHideInstall_Click(object sender, RoutedEventArgs e)
         {
-            string tempFilePath = Path.Combine(Path.GetTempPath(), $"{InstHidHideFileNameX64}");
-            if (File.Exists(tempFilePath))
-            {
-                File.Delete(tempFilePath);
-            }
+            string downloadDir = GetSafeDownloadDir();
+            string tempFilePath = Path.Combine(downloadDir, $"{InstHidHideFileNameX64}");
+            TryDeleteFileQuietly(tempFilePath);
 
-            string tempInstHidFileName = Path.Combine(Path.GetTempPath(), $"{InstHidHideFileNameX64}.tmp");
-            if (File.Exists(tempInstHidFileName))
-            {
-                File.Delete(tempInstHidFileName);
-            }
+            string tempInstHidFileName = Path.Combine(downloadDir, $"{InstHidHideFileNameX64}.tmp");
+            TryDeleteFileQuietly(tempInstHidFileName);
 
             EnableControls(false);
             HidHideDownloadLaunch();
@@ -291,8 +310,9 @@ namespace DS4WinWPF.DS4Forms
                 //Console.WriteLine(x.PercentComplete.ToString("P"));
             });
 
-            string tempInstHidFileName = Path.Combine(Path.GetTempPath(), $"{InstHidHideFileNameX64}.tmp");
-            string finalFilename = Path.Combine(Path.GetTempPath(), $"{InstHidHideFileNameX64}");
+            string downloadDir = GetSafeDownloadDir();
+            string tempInstHidFileName = Path.Combine(downloadDir, $"{InstHidHideFileNameX64}.tmp");
+            string finalFilename = Path.Combine(downloadDir, $"{InstHidHideFileNameX64}");
             bool success = false;
             using (var downloadStream = new FileStream(tempInstHidFileName, FileMode.CreateNew))
             {
@@ -303,7 +323,7 @@ namespace DS4WinWPF.DS4Forms
 
             if (success)
             {
-                File.Move(tempInstHidFileName, finalFilename);
+                File.Move(tempInstHidFileName, finalFilename, overwrite: true);
             }
             success = false; // Reset for later check
 
@@ -354,8 +374,8 @@ namespace DS4WinWPF.DS4Forms
                     }), null);
                 }
 
-                string currentFilePath = Path.Combine(Path.GetTempPath(), $"{InstHidHideFileNameX64}");
-                File.Delete(currentFilePath);
+                string currentFilePath = Path.Combine(GetSafeDownloadDir(), $"{InstHidHideFileNameX64}");
+                TryDeleteFileQuietly(currentFilePath);
                 ((NonFormTimer)sender).Stop();
                 finished = true;
             }
@@ -368,17 +388,12 @@ namespace DS4WinWPF.DS4Forms
 
         private void FakerInputInstallBtn_Click(object sender, RoutedEventArgs e)
         {
-            string tempFilePath = Path.Combine(Path.GetTempPath(), $"{installFileName}");
-            if (File.Exists(tempFilePath))
-            {
-                File.Delete(tempFilePath);
-            }
+            string downloadDir = GetSafeDownloadDir();
+            string tempFilePath = Path.Combine(downloadDir, $"{instFakerInputFileName}");
+            TryDeleteFileQuietly(tempFilePath);
 
-            string tempInstFakerInputName = Path.Combine(Path.GetTempPath(), $"{instFakerInputFileName}.tmp");
-            if (File.Exists(tempInstFakerInputName))
-            {
-                File.Delete(tempInstFakerInputName);
-            }
+            string tempInstFakerInputName = Path.Combine(downloadDir, $"{instFakerInputFileName}.tmp");
+            TryDeleteFileQuietly(tempInstFakerInputName);
 
             EnableControls(false);
             FakerInputDownloadLaunch();
@@ -396,9 +411,10 @@ namespace DS4WinWPF.DS4Forms
                 //Console.WriteLine(x.PercentComplete.ToString("P"));
             });
 
-            string tempInstFakerInputFileName = Path.Combine(Path.GetTempPath(),
+            string downloadDir = GetSafeDownloadDir();
+            string tempInstFakerInputFileName = Path.Combine(downloadDir,
                 $"{instFakerInputFileName}.tmp");
-            string finalFilename = Path.Combine(Path.GetTempPath(), $"{instFakerInputFileName}");
+            string finalFilename = Path.Combine(downloadDir, $"{instFakerInputFileName}");
             bool success = false;
             using (var downloadStream = new FileStream(tempInstFakerInputFileName, FileMode.CreateNew))
             {
@@ -409,7 +425,7 @@ namespace DS4WinWPF.DS4Forms
 
             if (success)
             {
-                File.Move(tempInstFakerInputFileName, finalFilename);
+                File.Move(tempInstFakerInputFileName, finalFilename, overwrite: true);
             }
             success = false; // Reset for later check
 
@@ -460,8 +476,8 @@ namespace DS4WinWPF.DS4Forms
                     }), null);
                 }
 
-                string currentFilePath = Path.Combine(Path.GetTempPath(), $"{instFakerInputFileName}");
-                File.Delete(currentFilePath);
+                string currentFilePath = Path.Combine(GetSafeDownloadDir(), $"{instFakerInputFileName}");
+                TryDeleteFileQuietly(currentFilePath);
                 ((NonFormTimer)sender).Stop();
                 finished = true;
             }

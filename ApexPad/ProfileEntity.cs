@@ -45,9 +45,8 @@ namespace DS4WinWPF
 
         public void DeleteFile()
         {
-            if (!string.IsNullOrWhiteSpace(name))
+            if (DS4Windows.Global.TryResolveSafeProfilePath(name, out string filepath))
             {
-                string filepath = DS4Windows.Global.appdatapath + @"\Profiles\" + name + ".xml";
                 if (File.Exists(filepath))
                 {
                     File.Delete(filepath);
@@ -72,11 +71,11 @@ namespace DS4WinWPF
 
         public void RenameProfile(string newProfileName)
         {
-            string oldFilePath = Path.Combine(DS4Windows.Global.appdatapath,
-                "Profiles", $"{name}.xml");
-
-            string newFilePath = Path.Combine(DS4Windows.Global.appdatapath,
-                "Profiles", $"{newProfileName}.xml");
+            if (!DS4Windows.Global.TryResolveSafeProfilePath(name, out string oldFilePath) ||
+                !DS4Windows.Global.TryResolveSafeProfilePath(newProfileName, out string newFilePath))
+            {
+                return;
+            }
 
             if (File.Exists(oldFilePath) && !File.Exists(newFilePath))
             {

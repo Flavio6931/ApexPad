@@ -618,16 +618,24 @@ namespace DS4Windows
 
         private void DS4Devices_RequestElevation(RequestElevationArgs args)
         {
+            string instanceId = args?.InstanceId;
+            if (string.IsNullOrWhiteSpace(instanceId) ||
+                !System.Text.RegularExpressions.Regex.IsMatch(instanceId, @"^[A-Za-z0-9\\&_#.{}-]+$"))
+            {
+                return;
+            }
+
             // Launches an elevated child process to re-enable device
             ProcessStartInfo startInfo =
                 new ProcessStartInfo(Global.exelocation);
             startInfo.Verb = "runas";
-            startInfo.Arguments = "re-enabledevice " + args.InstanceId;
+            startInfo.Arguments = $"re-enabledevice \"{instanceId}\"";
             startInfo.UseShellExecute = true;
 
             try
             {
-                Process child = Process.Start(startInfo);
+                using Process child = Process.Start(startInfo);
+                if (child == null) return;
                 if (!child.WaitForExit(30000))
                 {
                     child.Kill();
@@ -636,7 +644,6 @@ namespace DS4Windows
                 {
                     args.StatusCode = child.ExitCode;
                 }
-                child.Dispose();
             }
             catch { }
         }
@@ -2319,16 +2326,24 @@ namespace DS4Windows
                     catch { }
                 }
 
-                if (!procFound)
+                if (!procFound &&
+                    File.Exists(programPath) &&
+                    Path.GetExtension(programPath).Equals(".exe", StringComparison.OrdinalIgnoreCase))
                 {
                     Task processTask = new Task(() =>
                     {
                         Thread.Sleep(5000);
                         Process tempProcess = new Process();
                         tempProcess.StartInfo.FileName = programPath;
-                        tempProcess.StartInfo.WorkingDirectory = new FileInfo(programPath).Directory.ToString();
-                        //tempProcess.StartInfo.UseShellExecute = false;
-                        try { tempProcess.Start(); }
+                        tempProcess.StartInfo.WorkingDirectory = Path.GetDirectoryName(programPath);
+                        tempProcess.StartInfo.UseShellExecute = false;
+                        try
+                        {
+                            using (tempProcess)
+                            {
+                                tempProcess.Start();
+                            }
+                        }
                         catch { }
                     });
 

@@ -3464,7 +3464,8 @@ namespace DS4WinWPF.DS4Control.DTOXml
         {
             XmlDocument tempDoc = new XmlDocument();
             string tempXml = reader.ReadOuterXml();
-            XmlReader tempXmlReader = XmlReader.Create(new StringReader(tempXml));
+            XmlReaderSettings safeSettings = DS4Windows.Global.CreateSafeXmlReaderSettings();
+            using XmlReader tempXmlReader = XmlReader.Create(new StringReader(tempXml), safeSettings);
             tempDoc.Load(tempXmlReader);
             XmlNode parentNode = tempDoc.SelectSingleNode("Button");
             if (parentNode != null)
@@ -3520,7 +3521,8 @@ namespace DS4WinWPF.DS4Control.DTOXml
         {
             XmlDocument tempDoc = new XmlDocument();
             string tempXml = reader.ReadOuterXml();
-            XmlReader tempXmlReader = XmlReader.Create(new StringReader(tempXml));
+            XmlReaderSettings safeSettings = DS4Windows.Global.CreateSafeXmlReaderSettings();
+            using XmlReader tempXmlReader = XmlReader.Create(new StringReader(tempXml), safeSettings);
             tempDoc.Load(tempXmlReader);
             XmlNode parentNode = tempDoc.SelectSingleNode("Key");
             if (parentNode != null)
@@ -3576,7 +3578,8 @@ namespace DS4WinWPF.DS4Control.DTOXml
         {
             XmlDocument tempDoc = new XmlDocument();
             string tempXml = reader.ReadOuterXml();
-            XmlReader tempXmlReader = XmlReader.Create(new StringReader(tempXml));
+            XmlReaderSettings safeSettings = DS4Windows.Global.CreateSafeXmlReaderSettings();
+            using XmlReader tempXmlReader = XmlReader.Create(new StringReader(tempXml), safeSettings);
             tempDoc.Load(tempXmlReader);
             XmlNode parentNode = tempDoc.SelectSingleNode("Macro");
             if (parentNode != null)
@@ -3651,7 +3654,8 @@ namespace DS4WinWPF.DS4Control.DTOXml
         {
             XmlDocument tempDoc = new XmlDocument();
             string tempXml = reader.ReadOuterXml();
-            XmlReader tempXmlReader = XmlReader.Create(new StringReader(tempXml));
+            XmlReaderSettings safeSettings = DS4Windows.Global.CreateSafeXmlReaderSettings();
+            using XmlReader tempXmlReader = XmlReader.Create(new StringReader(tempXml), safeSettings);
             tempDoc.Load(tempXmlReader);
             XmlNode parentNode = tempDoc.SelectSingleNode("KeyType");
             if (parentNode != null)
@@ -3737,7 +3741,8 @@ namespace DS4WinWPF.DS4Control.DTOXml
         {
             XmlDocument tempDoc = new XmlDocument();
             string tempXml = reader.ReadOuterXml();
-            XmlReader tempXmlReader = XmlReader.Create(new StringReader(tempXml));
+            XmlReaderSettings safeSettings = DS4Windows.Global.CreateSafeXmlReaderSettings();
+            using XmlReader tempXmlReader = XmlReader.Create(new StringReader(tempXml), safeSettings);
             tempDoc.Load(tempXmlReader);
             XmlNode parentNode = tempDoc.SelectSingleNode("Extras");
             if (parentNode != null)
@@ -3793,7 +3798,8 @@ namespace DS4WinWPF.DS4Control.DTOXml
         {
             XmlDocument tempDoc = new XmlDocument();
             string tempXml = reader.ReadOuterXml();
-            XmlReader tempXmlReader = XmlReader.Create(new StringReader(tempXml));
+            XmlReaderSettings safeSettings = DS4Windows.Global.CreateSafeXmlReaderSettings();
+            using XmlReader tempXmlReader = XmlReader.Create(new StringReader(tempXml), safeSettings);
             tempDoc.Load(tempXmlReader);
             XmlNode parentNode = tempDoc.SelectSingleNode("LightbarMacro");
             if (parentNode != null)

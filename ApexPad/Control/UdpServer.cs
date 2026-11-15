@@ -515,6 +515,9 @@ namespace DS4Windows
                 }
                 else if (messageType == (uint)MessageType.DSUC_PadDataReq)
                 {
+                    if (currIdx + 8 > localMsg.Length)
+                        return;
+
                     byte regFlags = localMsg[currIdx++];
                     byte idToReg = localMsg[currIdx++];
                     PhysicalAddress macToReg = null;
@@ -525,11 +528,12 @@ namespace DS4Windows
                         macToReg = new PhysicalAddress(macBytes);
                     }
 
+                    const int maxClients = 64;
                     lock (clients)
                     {
                         if (clients.ContainsKey(clientEP))
                             clients[clientEP].RequestPadInfo(regFlags, idToReg, macToReg);
-                        else
+                        else if (clients.Count < maxClients)
                         {
                             var clientTimes = new ClientRequestTimes();
                             clientTimes.RequestPadInfo(regFlags, idToReg, macToReg);
@@ -981,14 +985,18 @@ namespace DS4Windows
                 currentRsp.padState = (byte)padMeta.PadState;
                 currentRsp.model = (byte)padMeta.Model;
                 currentRsp.connectionType = (byte)padMeta.ConnectionType;
+                if (padMeta.PadMacAddress != null)
                 {
                     byte[] padMac = padMeta.PadMacAddress.GetAddressBytes();
-                    currentRsp.address[0] = padMac[0];
-                    currentRsp.address[1] = padMac[1];
-                    currentRsp.address[2] = padMac[2];
-                    currentRsp.address[3] = padMac[3];
-                    currentRsp.address[4] = padMac[4];
-                    currentRsp.address[5] = padMac[5];
+                    if (padMac.Length >= 6)
+                    {
+                        currentRsp.address[0] = padMac[0];
+                        currentRsp.address[1] = padMac[1];
+                        currentRsp.address[2] = padMac[2];
+                        currentRsp.address[3] = padMac[3];
+                        currentRsp.address[4] = padMac[4];
+                        currentRsp.address[5] = padMac[5];
+                    }
                 }
                 currentRsp.batteryStatus = (byte)padMeta.BatteryStatus;
                 currentRsp.isActive = padMeta.IsActive ? (byte)1 : (byte)0;

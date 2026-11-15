@@ -93,7 +93,7 @@ namespace DS4WinWPF.DS4Forms
 
         private void OneEuroLink_Click(object sender, RoutedEventArgs e)
         {
-            Util.StartProcessHelper("http://cristal.univ-lille.fr/~casiez/1euro/");
+            Util.StartProcessHelper("https://gery.casiez.net/1euro/");
         }
 
         private void FakerInputLink_Click(object sender, RoutedEventArgs e)

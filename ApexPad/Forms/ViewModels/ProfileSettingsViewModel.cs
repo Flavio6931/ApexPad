@@ -3679,7 +3679,10 @@ namespace DS4WinWPF.DS4Forms.ViewModels
                         if (!String.IsNullOrEmpty(defaultBrowserCmd))
                         {
                             int iStartPos = (defaultBrowserCmd[0] == '"' ? 1 : 0);
-                            defaultBrowserCmd = defaultBrowserCmd.Substring(iStartPos, defaultBrowserCmd.LastIndexOf(".exe") + 4 - iStartPos);
+                            int exeIdx = defaultBrowserCmd.LastIndexOf(".exe", StringComparison.OrdinalIgnoreCase);
+                            defaultBrowserCmd = exeIdx >= iStartPos
+                                ? defaultBrowserCmd.Substring(iStartPos, exeIdx + 4 - iStartPos)
+                                : String.Empty;
                             if (Path.GetFileName(defaultBrowserCmd) == "launchwinapp.exe")
                                 defaultBrowserCmd = String.Empty;
                         }
@@ -3694,11 +3697,22 @@ namespace DS4WinWPF.DS4Forms.ViewModels
                 }
 
                 // Launch custom bezier editor webapp using a default browser executable command or via a default shell command. The default shell exeution doesn't support query parameters.
-                if (!String.IsNullOrEmpty(defaultBrowserCmd))
-                    System.Diagnostics.Process.Start(defaultBrowserCmd, $"\"file:///{Global.exedirpath}\\BezierCurveEditor\\index.html?curve={customDefinition.Replace(" ", "")}\"");
-                else
+                string editorPath = Path.Combine(Global.exedirpath, "BezierCurveEditor", "index.html");
+                if (!String.IsNullOrEmpty(defaultBrowserCmd) && File.Exists(editorPath))
                 {
-                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo($"{Global.exedirpath}\\BezierCurveEditor\\index.html");
+                    string safeCurve = Uri.EscapeDataString((customDefinition ?? String.Empty).Replace(" ", ""));
+                    var psi = new System.Diagnostics.ProcessStartInfo(defaultBrowserCmd)
+                    {
+                        UseShellExecute = false
+                    };
+                    psi.ArgumentList.Add($"file:///{editorPath}?curve={safeCurve}");
+                    using (System.Diagnostics.Process temp = System.Diagnostics.Process.Start(psi))
+                    {
+                    }
+                }
+                else if (File.Exists(editorPath))
+                {
+                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo(editorPath);
                     startInfo.UseShellExecute = true;
                     using (System.Diagnostics.Process temp = System.Diagnostics.Process.Start(startInfo))
                     {

@@ -511,8 +511,7 @@ namespace DS4WinWPF
                 rootHub = new DS4Windows.ControlService(parser);
 
                 DS4Windows.Program.rootHub = rootHub;
-                requestClient = new HttpClient();
-                requestClient.DefaultRequestHeaders.Add("User-Agent", "ApexPad");
+                requestClient = CreateHardenedHttpClient();
                 collectTimer = new Timer(GarbageTask, null, 30000, 30000);
 
             });
@@ -528,8 +527,7 @@ namespace DS4WinWPF
             controlThread = new Thread(() =>
             {
                 DS4Windows.Program.rootHub = rootHub;
-                requestClient = new HttpClient();
-                requestClient.DefaultRequestHeaders.Add("User-Agent", "ApexPad");
+                requestClient = CreateHardenedHttpClient();
                 collectTimer = new Timer(GarbageTask, null, 30000, 30000);
             });
             controlThread.Priority = ThreadPriority.Normal;
@@ -537,6 +535,23 @@ namespace DS4WinWPF
             controlThread.Start();
             while (controlThread.IsAlive)
                 Thread.SpinWait(500);
+        }
+
+        /// <summary>
+        /// Crea un cliente HTTP con tiempo de espera acotado y rotacion de conexiones.
+        /// </summary>
+        private static HttpClient CreateHardenedHttpClient()
+        {
+            var handler = new SocketsHttpHandler
+            {
+                PooledConnectionLifetime = TimeSpan.FromMinutes(2),
+            };
+            var client = new HttpClient(handler, disposeHandler: true)
+            {
+                Timeout = TimeSpan.FromSeconds(15),
+            };
+            client.DefaultRequestHeaders.Add("User-Agent", "ApexPad");
+            return client;
         }
 
         private void GarbageTask(object state)
@@ -660,7 +675,7 @@ namespace DS4WinWPF
                     {
                         int strNullCharIdx;
                         byte[] buffer = new byte[256];
-                        MemoryMappedViewAccessor ipcResultDataMMA = ipcClassNameMMF.CreateViewAccessor(0, buffer.Length);
+                        using MemoryMappedViewAccessor ipcResultDataMMA = ipcResultDataMMF.CreateViewAccessor(0, buffer.Length);
                         ipcResultDataMMA.ReadArray(0, buffer, 0, buffer.Length);
                         strNullCharIdx = Array.FindIndex(buffer, byteVal => byteVal == 0);
                         return ASCIIEncoding.ASCII.GetString(buffer, 0, (strNullCharIdx <= 1 ? 1 : strNullCharIdx));

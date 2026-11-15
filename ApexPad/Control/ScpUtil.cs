@@ -648,6 +648,105 @@ namespace DS4Windows
         public const string CUSTOM_EXE_CONFIG_FILENAME = "custom_exe_name.txt";
         public const string XML_EXTENSION = ".xml";
 
+        /// <summary>
+        /// Crea configuracion de XmlReader segura sin DTD ni resolucion de entidades externas.
+        /// </summary>
+        public static XmlReaderSettings CreateSafeXmlReaderSettings()
+        {
+            return new XmlReaderSettings
+            {
+                DtdProcessing = DtdProcessing.Prohibit,
+                XmlResolver = null,
+                MaxCharactersInDocument = 10_000_000,
+            };
+        }
+
+        /// <summary>
+        /// Carga un archivo XML en XmlDocument bloqueando DTD y entidades externas (XXE).
+        /// </summary>
+        public static void LoadXmlSafely(XmlDocument doc, string filePath)
+        {
+            if (doc == null) throw new ArgumentNullException(nameof(doc));
+            if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentNullException(nameof(filePath));
+
+            doc.XmlResolver = null;
+            using XmlReader reader = XmlReader.Create(filePath, CreateSafeXmlReaderSettings());
+            doc.Load(reader);
+        }
+
+        /// <summary>
+        /// Valida un nombre de perfil y resuelve su ruta canonica dentro de Profiles sin permitir traversal.
+        /// </summary>
+        public static bool TryResolveSafeProfilePath(string profileName, out string fullPath, string extension = XML_EXTENSION)
+        {
+            fullPath = string.Empty;
+            if (string.IsNullOrWhiteSpace(appdatapath) || string.IsNullOrWhiteSpace(profileName))
+            {
+                return false;
+            }
+
+            if (profileName.IndexOfAny(new[] { '/', '\\', ':' }) >= 0 ||
+                profileName.Contains("..", StringComparison.Ordinal) ||
+                Path.IsPathRooted(profileName) ||
+                profileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            {
+                return false;
+            }
+
+            string cleanName = profileName.Trim();
+            if (cleanName.Equals(".", StringComparison.Ordinal) ||
+                cleanName.Equals("..", StringComparison.Ordinal) ||
+                !cleanName.Equals(profileName, StringComparison.Ordinal))
+            {
+                return false;
+            }
+
+            string ext = extension ?? string.Empty;
+            string profilesRoot = Path.GetFullPath(Path.Combine(appdatapath, "Profiles"));
+            if (!profilesRoot.EndsWith(Path.DirectorySeparatorChar))
+            {
+                profilesRoot += Path.DirectorySeparatorChar;
+            }
+
+            string candidate = Path.GetFullPath(Path.Combine(profilesRoot, $"{profileName}{ext}"));
+            if (!candidate.StartsWith(profilesRoot, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            fullPath = candidate;
+            return true;
+        }
+
+        /// <summary>
+        /// Busca un nodo Controller por atributo Mac evitando inyeccion XPath por concatenacion.
+        /// </summary>
+        public static XmlNode FindControllerNodeByMac(XmlDocument xmlDoc, string macAddress)
+        {
+            if (xmlDoc == null || string.IsNullOrEmpty(macAddress))
+            {
+                return null;
+            }
+
+            XmlNode controllersNode = xmlDoc.SelectSingleNode("/Controllers");
+            if (controllersNode == null)
+            {
+                return null;
+            }
+
+            foreach (XmlNode child in controllersNode.ChildNodes)
+            {
+                if (child.NodeType == XmlNodeType.Element &&
+                    child.Name == "Controller" &&
+                    string.Equals(child.Attributes?["Mac"]?.Value, macAddress, StringComparison.OrdinalIgnoreCase))
+                {
+                    return child;
+                }
+            }
+
+            return null;
+        }
+
         public static X360Controls[] defaultButtonMapping = {
             X360Controls.None, // DS4Controls.None
             X360Controls.LXNeg, // DS4Controls.LXNeg
@@ -1469,7 +1568,7 @@ namespace DS4Windows
                     s = profiles[i];
                     if (Path.GetExtension(s) == ".xml")
                     {
-                        xDoc.Load(s);
+                        LoadXmlSafely(xDoc, s);
                         XmlNode el = xDoc.SelectSingleNode("DS4Windows/ProfileActions");
                         if (el != null)
                         {
@@ -2847,8 +2946,13 @@ namespace DS4Windows
         public static bool LoadTempProfile(int device, string name, bool launchprogram,
             ControlService control, bool xinputChange = true)
         {
-            bool result = m_Config.LoadProfileNew(device, launchprogram, control, Path.Combine(appdatapath, "Profiles", $"{name}.xml"));
-            //bool result = m_Config.LoadProfile(device, launchprogram, control, Path.Combine(appdatapath, "Profiles", $"{name}.xml"));
+            if (!TryResolveSafeProfilePath(name, out string safePath))
+            {
+                return false;
+            }
+
+            bool result = m_Config.LoadProfileNew(device, launchprogram, control, safePath, xinputChange);
+            //bool result = m_Config.LoadProfile(device, launchprogram, control, safePath);
             if (result)
             {
                 tempprofilename[device] = name;
@@ -4341,13 +4445,15 @@ namespace DS4Windows
         public bool SaveProfileNew(int device, string proName)
         {
             bool saved = true;
-            if (proName.EndsWith(Global.XML_EXTENSION))
+            if (proName != null && proName.EndsWith(Global.XML_EXTENSION))
             {
                 proName = proName.Remove(proName.LastIndexOf(Global.XML_EXTENSION));
             }
 
-            string path = Path.Combine(Global.appdatapath, "Profiles",
-                $"{proName}{Global.XML_EXTENSION}");
+            if (!Global.TryResolveSafeProfilePath(proName, out string path))
+            {
+                return false;
+            }
             string testStr = string.Empty;
             XmlSerializer serializer = new XmlSerializer(typeof(ProfileDTO),
                 ProfileDTO.GetAttributeOverrides());
@@ -4402,12 +4508,15 @@ namespace DS4Windows
         {
             bool Saved = true;
             //string path = Global.appdatapath + @"\Profiles\" + Path.GetFileNameWithoutExtension(proName) + ".xml";
-            if (proName.EndsWith(Global.XML_EXTENSION))
+            if (proName != null && proName.EndsWith(Global.XML_EXTENSION))
             {
                 proName = proName.Remove(proName.LastIndexOf(Global.XML_EXTENSION));
             }
 
-            string path = $@"{Global.appdatapath}\Profiles\{proName}{Global.XML_EXTENSION}";
+            if (!Global.TryResolveSafeProfilePath(proName, out string path))
+            {
+                return false;
+            }
             try
             {
                 XmlNode tmpNode;
@@ -5230,10 +5339,16 @@ namespace DS4Windows
             bool migratePerformed = false;
             string profilepath;
             if (propath == "")
-                profilepath = Path.Combine(Global.appdatapath, "Profiles",
-                    $"{profilePath[device]}.xml");
+            {
+                if (!Global.TryResolveSafeProfilePath(profilePath[device], out profilepath))
+                {
+                    profilepath = string.Empty;
+                }
+            }
             else
+            {
                 profilepath = propath;
+            }
 
             if (File.Exists(profilepath))
             {
@@ -5360,15 +5475,17 @@ namespace DS4Windows
                         catch { }
                     }
 
-                    if (!procFound)
+                    if (!procFound &&
+                        File.Exists(programPath) &&
+                        Path.GetExtension(programPath).Equals(".exe", StringComparison.OrdinalIgnoreCase))
                     {
                         Task processTask = new Task(() =>
                         {
                             Thread.Sleep(5000);
                             using Process tempProcess = new Process();
                             tempProcess.StartInfo.FileName = programPath;
-                            tempProcess.StartInfo.WorkingDirectory = new FileInfo(programPath).Directory.ToString();
-                            //tempProcess.StartInfo.UseShellExecute = false;
+                            tempProcess.StartInfo.WorkingDirectory = Path.GetDirectoryName(programPath);
+                            tempProcess.StartInfo.UseShellExecute = false;
                             try { tempProcess.Start(); }
                             catch { }
                         });
@@ -5473,9 +5590,16 @@ namespace DS4Windows
             bool migratePerformed = false;
             string profilepath;
             if (propath == "")
-                profilepath = Global.appdatapath + @"\Profiles\" + profilePath[device] + ".xml";
+            {
+                if (!Global.TryResolveSafeProfilePath(profilePath[device], out profilepath))
+                {
+                    profilepath = string.Empty;
+                }
+            }
             else
+            {
                 profilepath = propath;
+            }
 
             bool xinputPlug = false;
             bool xinputStatus = false;
@@ -6386,16 +6510,24 @@ namespace DS4Windows
                         catch { }
                     }
 
-                    if (!procFound)
+                    if (!procFound &&
+                        File.Exists(programPath) &&
+                        Path.GetExtension(programPath).Equals(".exe", StringComparison.OrdinalIgnoreCase))
                     {
                         Task processTask = new Task(() =>
                         {
                             Thread.Sleep(5000);
                             System.Diagnostics.Process tempProcess = new System.Diagnostics.Process();
                             tempProcess.StartInfo.FileName = programPath;
-                            tempProcess.StartInfo.WorkingDirectory = new FileInfo(programPath).Directory.ToString();
-                            //tempProcess.StartInfo.UseShellExecute = false;
-                            try { tempProcess.Start(); }
+                            tempProcess.StartInfo.WorkingDirectory = Path.GetDirectoryName(programPath);
+                            tempProcess.StartInfo.UseShellExecute = false;
+                            try
+                            {
+                                using (tempProcess)
+                                {
+                                    tempProcess.Start();
+                                }
+                            }
                             catch { }
                         });
 
@@ -7916,7 +8048,7 @@ namespace DS4Windows
                 {
                     XmlNode Item;
 
-                    m_Xdoc.Load(m_Profile);
+                    Global.LoadXmlSafely(m_Xdoc, m_Profile);
 
                     try { Item = m_Xdoc.SelectSingleNode("/Profile/useExclusiveMode"); Boolean.TryParse(Item.InnerText, out useExclusiveMode); } // Ex Mode
                     catch { missingSetting = true; } // Ex Mode
@@ -8653,7 +8785,7 @@ namespace DS4Windows
 
             try
             {
-                m_Xdoc.Load(m_Actions);
+                Global.LoadXmlSafely(m_Xdoc, m_Actions);
             }
             catch (XmlException)
             {
@@ -9160,9 +9292,9 @@ namespace DS4Windows
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load(m_controllerConfigs);
+                Global.LoadXmlSafely(xmlDoc, m_controllerConfigs);
 
-                XmlNode node = xmlDoc.SelectSingleNode("/Controllers/Controller[@Mac=\"" + device.getMacAddress() + "\"]");
+                XmlNode node = Global.FindControllerNodeByMac(xmlDoc, device.getMacAddress());
                 if (node != null)
                 {
                     Int32 intValue;
@@ -9198,9 +9330,9 @@ namespace DS4Windows
             {
                 //XmlNode node = null;
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load(m_controllerConfigs);
+                Global.LoadXmlSafely(xmlDoc, m_controllerConfigs);
 
-                XmlNode node = xmlDoc.SelectSingleNode("/Controllers/Controller[@Mac=\"" + device.getMacAddress() + "\"]");
+                XmlNode node = Global.FindControllerNodeByMac(xmlDoc, device.getMacAddress());
                 XmlNode xmlControllersNode = xmlDoc.SelectSingleNode("/Controllers");
                 if (node == null)
                 {
