@@ -3404,7 +3404,7 @@ namespace DS4Windows
         /// </summary>
         public static bool CheckNewerVersionExists(out Version version, bool allowCached = true)
         {
-            version = Version.Parse("1.0.0");
+            version = Version.Parse("1.0.1");
             return false;
         }
 

@@ -18,9 +18,9 @@
 		<ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
 		<TieredCompilation>true</TieredCompilation>
 		<TieredPGO>true</TieredPGO>
-		<AssemblyVersion>1.0.0</AssemblyVersion>
-		<FileVersion>1.0.0</FileVersion>
-		<Version>1.0.0</Version>
+		<AssemblyVersion>1.0.1</AssemblyVersion>
+		<FileVersion>1.0.1</FileVersion>
+		<Version>1.0.1</Version>
 		<Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
 		<Platform Condition=" '$(Platform)' == '' ">x64</Platform>
 		<Copyright>Copyright © 2026 Flavio Morales (ApexPad); basado en trabajo GPLv3 de Scarlet.Crush Productions, InhexSTER, electrobrains, Jays2Kings, Ryochan7 y schmaldeo</Copyright>

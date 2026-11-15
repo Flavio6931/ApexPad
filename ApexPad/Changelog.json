@@ -1,9 +1,28 @@
 {
-  "latest_version": "1.0.0",
-  "latest_version_number_info": {"majorPart": 1, "minorPart": 0, "buildPart": 0},
-  "updated_at": "2026-11-14T16:00:00+0000",
+  "latest_version": "1.0.1",
+  "latest_version_number_info": {"majorPart": 1, "minorPart": 0, "buildPart": 1},
+  "updated_at": "2026-11-15T17:55:00+0000",
   "changelog": {
     "versions": [
+    {
+      "version_str": "1.0.1",
+      "version_number_info": {"majorPart": 1, "minorPart": 0, "buildPart": 1},
+      "base_header": "ApexPad 1.0.1",
+      "release_date": "2026-11-15T17:55:00+0000",
+      "locales": [
+        {
+          "code": "en",
+          "header": "ApexPad 1.0.1",
+          "log_text": ["* Security hardening across HID I/O, XML parsing (anti-XXE/Path Traversal), IPC MMF, UDP bounds, task scheduler and process launching",
+            "* Disabled legacy third-party auto-updater/downloader endpoints",
+            "* Fixed GitHub Actions x86 test matrix (--no-restore), pinned CI actions to SHAs and added SHA256SUMS.txt generation",
+            "* Expanded SecurityHardeningTests unit test suite (15/15 passing)"],
+          "editor": "Flavio6931",
+          "editors_note": ["Security hardening & CI maintenance release"],
+          "updated_at": "2026-11-15T17:55:00+0000"
+        }
+      ]
+    },
     {
       "version_str": "1.0.0",
       "version_number_info": {"majorPart": 1, "minorPart": 0, "buildPart": 0},
