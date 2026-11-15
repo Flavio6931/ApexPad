@@ -4054,6 +4054,7 @@ namespace DS4Windows
                 lightInfo.m_LowLed = new DS4Color(Color.Red);
                 lightInfo.m_FlashLed = new DS4Color(Color.Red);
                 lightInfo.flashAt = 20;
+                lightInfo.flashType = 1;
                 lightInfo.ledAsBattery = true;
             }
         }
@@ -9606,7 +9607,7 @@ namespace DS4Windows
             lightInfo.m_ChargingLed = new DS4Color(Color.Black);
             lightInfo.m_FlashLed = new DS4Color(Color.Red);
             lightInfo.flashAt = 20;
-            lightInfo.flashType = 0;
+            lightInfo.flashType = 1;
             lightInfo.chargingType = 0;
             lightInfo.rainbow = 0;
             lightInfo.maxRainbowSat = LightbarDS4WinInfo.DEFAULT_MAX_RAINBOW_SAT;

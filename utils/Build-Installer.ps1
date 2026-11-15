@@ -176,10 +176,10 @@ namespace ApexPadSetup
 
             var lblSubtitle = new Label
             {
-                Text = "Emulacion de mandos DualShock 4, DualSense, Switch Pro y Joy-Con de baja latencia.",
+                Text = "Emulacion de mandos DualShock 4, DualSense, Switch Pro y Joy-Con (baja latencia).",
                 ForeColor = Color.FromArgb(161, 161, 170),
                 Location = new Point(26, 54),
-                Size = new Size(490, 22)
+                Size = new Size(492, 34)
             };
 
             var lblDest = new Label
@@ -231,7 +231,7 @@ namespace ApexPadSetup
             {
                 Text = "Registrar en Menu Inicio y Busqueda de Windows (obligatorio)",
                 Checked = true,
-                Enabled = false,
+                AutoCheck = false,
                 Location = new Point(24, 186),
                 Size = new Size(480, 24),
                 ForeColor = Color.FromArgb(244, 244, 245)

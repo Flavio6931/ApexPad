@@ -696,9 +696,12 @@ namespace DS4Windows
                 // If OnlyOutputData0x05 feature is not set then use the default DS4 output buffer size. However, some Razer gamepads use 32 bytes output buffer and output data type 0x05 in BT mode (writeData fails if the code tries to write too many unnecessary bytes)
                 if ((this.featureSet & VidPidFeatureSet.OnlyOutputData0x05) == 0)
                 {
-                    // Default DS4 logic while writing data to gamepad
-                    outputReport = new byte[BT_OUTPUT_REPORT_LENGTH];
-                    outReportBuffer = new byte[BT_OUTPUT_REPORT_LENGTH];
+                    // Buffer de 78 bytes exactos para reporte BT 0x11 (evita rechazo por tamanio en HidD_SetOutputReport)
+                    int initReportLen = knownGoodBTOutputReportType == DEFAULT_BT_REPORT_TYPE
+                        ? BT_OUTPUT_REPORT_0x11_LENGTH
+                        : BT_OUTPUT_REPORT_LENGTH;
+                    outputReport = new byte[initReportLen];
+                    outReportBuffer = new byte[initReportLen];
 
                     // Buffer len and output report payload len will differ
                     btOutputPayloadLen = BT_OUTPUT_REPORT_0x11_LENGTH;
@@ -925,34 +928,19 @@ namespace DS4Windows
 
         protected bool WriteOutput(byte[] outputBuffer)
         {
-            if (conType == ConnectionType.BT)
+            if (conType == ConnectionType.BT && (this.featureSet & VidPidFeatureSet.OnlyOutputData0x05) == 0)
             {
-                //if ((this.featureSet & VidPidFeatureSet.OnlyOutputData0x05) == 0)
-                //    return hDevice.WriteOutputReportViaControl(outputReport);
+                // Usamos Control Transfer (HidD_SetOutputReport de 78 bytes) para evitar padding a 547 bytes en hidbth
+                return hDevice.WriteOutputReportViaControl(outputBuffer)
+                    || hDevice.WriteOutputReportViaInterrupt(outputBuffer, READ_STREAM_TIMEOUT);
+            }
 
-                // Use Interrupt endpoint for BT DS4 connected devices now
-                return hDevice.WriteOutputReportViaInterrupt(outputBuffer, READ_STREAM_TIMEOUT);
-            }
-            else
-            {
-                return hDevice.WriteOutputReportViaInterrupt(outputBuffer, READ_STREAM_TIMEOUT);
-            }
+            return hDevice.WriteOutputReportViaInterrupt(outputBuffer, READ_STREAM_TIMEOUT);
         }
 
         protected bool writeOutput()
         {
-            if (conType == ConnectionType.BT)
-            {
-                //if ((this.featureSet & VidPidFeatureSet.OnlyOutputData0x05) == 0)
-                //    return hDevice.WriteOutputReportViaControl(outputReport);
-
-                // Use Interrupt endpoint for almost BT DS4 connected devices now
-                return hDevice.WriteOutputReportViaInterrupt(outputReport, READ_STREAM_TIMEOUT);
-            }
-            else
-            {
-                return hDevice.WriteOutputReportViaInterrupt(outReportBuffer, READ_STREAM_TIMEOUT);
-            }
+            return WriteOutput(conType == ConnectionType.BT ? outputReport : outReportBuffer);
         }
 
         private readonly Stopwatch rumbleAutostopTimer = new Stopwatch(); // Autostop timer to stop rumble motors if those are stuck in a rumble state
@@ -1544,6 +1532,13 @@ namespace DS4Windows
         private unsafe void PrepareOutputReportInner(ref bool change, ref bool haptime)
         {
             bool usingBT = conType == ConnectionType.BT;
+            byte effectiveFeatures = outputFeaturesByte;
+            if (currentHap.lightbarState.LightBarFlashDurationOn == 0 &&
+                currentHap.lightbarState.LightBarFlashDurationOff == 0)
+            {
+                // Omitir bit 0x04 de parpadeo hardware cuando no hay destello activo para evitar bloqueo LED en mandos BT
+                effectiveFeatures = (byte)(effectiveFeatures & ~0x04);
+            }
 
             if (usingBT && (this.featureSet & VidPidFeatureSet.OnlyOutputData0x05) == 0)
             {
@@ -1555,7 +1550,7 @@ namespace DS4Windows
 
                 // Headphone volume L (0x10), Headphone volume R (0x20), Mic volume (0x40), Speaker volume (0x80)
                 // enable rumble (0x01), lightbar (0x02), flash (0x04). Default: 0x07
-                outReportBuffer[3] = outputFeaturesByte;
+                outReportBuffer[3] = effectiveFeatures;
                 outReportBuffer[4] = 0x04;
 
                 outReportBuffer[6] = currentHap.rumbleState.RumbleMotorStrengthRightLightFast; // fast motor
@@ -1586,7 +1581,7 @@ namespace DS4Windows
                 outReportBuffer[0] = 0x05;
                 // Headphone volume L (0x10), Headphone volume R (0x20), Mic volume (0x40), Speaker volume (0x80)
                 // enable rumble (0x01), lightbar (0x02), flash (0x04). Default: 0x07
-                outReportBuffer[1] = outputFeaturesByte;
+                outReportBuffer[1] = effectiveFeatures;
                 outReportBuffer[2] = 0x04;
                 outReportBuffer[4] = currentHap.rumbleState.RumbleMotorStrengthRightLightFast; // fast motor
                 outReportBuffer[5] = currentHap.rumbleState.RumbleMotorStrengthLeftHeavySlow; // slow  motor

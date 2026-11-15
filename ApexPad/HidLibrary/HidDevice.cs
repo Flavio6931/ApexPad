@@ -221,13 +221,16 @@ namespace DS4Windows
             _writeWaitEvent.Reset();
             var ov = new NativeOverlapped { EventHandle = _writeWaitEvent.SafeWaitHandle.DangerousGetHandle() };
 
-            if (PInvoke.WriteFile(SafeReadHandle, outputBuffer, null, &ov))
-                return true;
+            fixed (byte* ptr = outputBuffer)
+            {
+                if (PInvoke.WriteFile(SafeReadHandle, outputBuffer, null, &ov))
+                    return true;
 
-            if (Marshal.GetLastWin32Error() != (uint)WIN32_ERROR.ERROR_IO_PENDING) return false;
+                if (Marshal.GetLastWin32Error() != (uint)WIN32_ERROR.ERROR_IO_PENDING) return false;
 
-            if (!PInvoke.GetOverlappedResult(SafeReadHandle, ov, out _, true))
-                return false;
+                if (!PInvoke.GetOverlappedResult(SafeReadHandle, ov, out _, true))
+                    return false;
+            }
 
             return true;
         }
